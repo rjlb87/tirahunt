@@ -1,8 +1,9 @@
+import NavBar from './common/NavBar'
 
 function App() {
   return (
-    <div className="bg-blue-600">hey jude brother</div>
-  )
+    <NavBar />
+    )
 }
 
 export default App
