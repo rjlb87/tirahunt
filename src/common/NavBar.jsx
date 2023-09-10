@@ -38,7 +38,7 @@ const NavBar = () => {
   };
 
   return (
-    <div className="z-50 fixed flex justify-between items-center w-full h-20 px-4 bg-black bg-opacity-50 backdrop-filter backdrop-blur-lg  nav ">
+    <div className="z-50 fixed flex justify-between items-center w-full h-20 px-4 bg-white bg-opacity-50 backdrop-filter backdrop-blur-lg  nav ">
       <div className="flex items-center ml-4 pt-4">
         <Link to="Home" smooth={true} duration={500} onClick={handleCloseNav}>
           <button>
