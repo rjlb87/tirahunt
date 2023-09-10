@@ -1,35 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-scroll";
+import { FaSearch } from 'react-icons/fa';
 
 const NavBar = () => {
   const [nav, setNav] = useState(false);
-
-  const links = [
-    {
-      id: 1,
-      link: "Home",
-    },
-    {
-      id: 2,
-      link: "About",
-    },
-    // {
-    //   id: 3,
-    //   link: "Skills",
-    // },
-    // {
-    //   id: 4,
-    //   link: "Experience",
-    // },
-    // {
-    //   id: 5,
-    //   link: "Projects",
-    // },
-    {
-      id: 6,
-      link: "Contact",
-    },
-  ];
 
   const handleCloseNav = () => {
     if (nav) {
@@ -38,70 +12,47 @@ const NavBar = () => {
   };
 
   return (
-    <div className="z-50 fixed flex justify-between items-center w-full h-20 px-4 bg-white bg-opacity-50 backdrop-filter backdrop-blur-lg  nav ">
-      <div className="flex items-center ml-4 pt-4">
-        <Link to="Home" smooth={true} duration={500} onClick={handleCloseNav}>
-          <button>
-            <h1 className="text-3xl font-bold text-white pl-8" name="Home">
-              airbnb
-            </h1>
-          </button>
-        </Link>
-      </div>
-      <ul className="hidden md:flex">
-        {links.map(({ id, link }) => (
-          <li
-            key={id}
-            className="px-3 cursor-pointer font-medium text-white hover:scale-105 hover:text-white link-underline"
-          >
-            <Link
-              activeClass="active"
-              to={link}
-              spy={true}
-              smooth={true}
-              duration={500} // set duration to 0
-              onClick={handleCloseNav}
-            >
-              {link}
-            </Link>
-          </li>
-        ))}
-      </ul>
-
-      <div
-        onClick={() => setNav(!nav)}
-        className="cursor-pointer pr-4 z-10 text-[#03b1fc]  md:hidden"
-      >
-        {/* {nav ? <FaTimes size={20} /> : <FaBars size={20} />} */}
+    <>
+      <div className="bg-gray-100 border text-gray-800 text-center text- px-4 py-3 rounded relative" role="alert">
+        <span className="block sm:inline">Hey, </span>
+        <span className="block sm:inline font-semibold">Where are you going?</span>
+        <span className="absolute top-0 bottom-0 right-0 px-4 py-3">
+          <svg className="fill-current h-6 w-6 text-gray-800" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" /></svg>
+        </span>
       </div>
 
-      {nav && (
-        <ul className="flex flex-col justify-start absolute top-0 left-0 w-full h-screen bg-black pl-8">
-          <div className="fixed flex justify-between items-center w-full h-20 px-4 bg-black white nav">
-            {/* <div className="flex items-center ml-4 pt-4">
-              <h1 className="text-4xl font-bold text-white  ">rj.</h1>
-            </div> */}
+      <div className="z-50 fixed flex justify-between items-center w-full h-[92px] px-4 bg-white border nav ">
+        <div className="flex items-center ml-4 pt-4">
+          <Link to="Home" smooth={true} duration={500} onClick={handleCloseNav}>
+            <button>
+              <h1 className="text-3xl font-bold text-[#92c872] pl-8 pb-4">
+                tirahunt.
+              </h1>
+            </button>
+          </Link>
+        </div>
+        <div className="flex-grow flex justify-center"> 
+          <div className="relative right-20">
+            <input
+              type="text"
+              placeholder="Manila"
+              className="pl-6 h-12 w-full pr-16 rounded-full border shadow-md"
+            />
+            <div className="absolute right-2 top-1/2 transform -translate-y-1/2 h-full flex items-center">
+              <button className="bg-[#92c872] text-white rounded-full p-2">
+                <FaSearch size={18} />
+              </button>
+            </div>
           </div>
-          {links.map(({ id, link }) => (
-            <li
-              key={id}
-              className="px-4 cursor-pointer capitalize py-4 text-2xl text-[#03b1fc] pt-8  text-center"
-            >
-              <Link
-                activeClass="active"
-                to={link}
-                spy={true}
-                smooth={true}
-                duration={0} // set duration to 0
-                onClick={handleCloseNav}
-              >
-                {link}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
+        </div>
+        <div
+          onClick={() => setNav(!nav)}
+          className="cursor-pointer pr-4 z-10 text-[#03b1fc] md:hidden"
+        >
+          {nav ? "✕" : "☰"}
+        </div>
+      </div>
+    </>
   );
 };
 
