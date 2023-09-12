@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-scroll";
-import { FaSearch } from "react-icons/fa";
+import { FaSearch, FaUserCircle } from "react-icons/fa";
 import { navlink } from "../utils/navlinks";
 
 const NavBar = () => {
@@ -35,7 +35,7 @@ const NavBar = () => {
         </span>
       </div>
 
-      <div className="z-50 fixed flex justify-between items-center w-full h-[92px] px-4 bg-white border nav ">
+      <div className="z-50 fixed flex justify-between items-center w-full h-[92px] px-4 bg-white border nav">
         <div className="flex items-center ml-4 pt-4">
           <Link to="Home" smooth={true} duration={500} onClick={handleCloseNav}>
             <button>
@@ -45,28 +45,9 @@ const NavBar = () => {
             </button>
           </Link>
         </div>
-        <ul className="hidden md:flex">
-          {navlink.map(({ id, link }) => (
-            <li
-              key={id}
-              className="px-3 cursor-pointer font-medium text-black dark:text-white hover:scale-100 dark:hover:text-gray-500 hover:text-gray-500"
-            >
-              <Link
-                activeClass="active"
-                to={link}
-                spy={true}
-                smooth={true}
-                duration={500}
-                onClick={handleCloseNav}
-              >
-                {link}
-              </Link>
-            </li>
-          ))}
-        </ul>
-
+        {/* Search bar */}
         <div className="flex-grow flex justify-center">
-          <div className="relative right-20">
+          <div className="relative left-36 mr-20">
             <input
               type="text"
               placeholder="Manila"
@@ -79,14 +60,66 @@ const NavBar = () => {
             </div>
           </div>
         </div>
+
+        <div className="flex-1 flex items-center justify-end space-x-4 text-gray-800 pr-10">
+          <a className="hidden md:inline" href="#">
+            Become a host
+          </a>
+
+          <svg
+            className="h-6 cursor-pointer"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
+            />
+          </svg>
+          {/* tirahunt login/signup icon */}
+          <div className="flex space-x-2 border rounded-full p-2">
+            <svg
+              className="h-6 cursor-pointer"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth="1"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+            <svg
+              className="h-6 cursor-pointer"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </div>
+        </div>
+
+        {/* Mobile navigation */}
         <div
           onClick={() => setNav(!nav)}
-          className="cursor-pointer pr-4 z-10 text-[#03b1fc] md:hidden"
+          className="cursor-pointer pr-4 z-10 text-gray-700 md:hidden"
         >
           {nav ? "✕" : "☰"}
         </div>
         {nav && (
-          <ul className="flex flex-col absolute top-0 left-0 w-full h-screen">
+          <ul className="flex flex-col absolute top-0 left-0 w-full h-screen bg-white">
             {navlink.map(({ id, link }) => (
               <li
                 key={id}
