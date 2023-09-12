@@ -45,7 +45,7 @@ const NavBar = () => {
             </button>
           </Link>
         </div>
-        <ul className="hidden md:flex">
+        {/* <ul className="hidden md:flex">
           {navlink.map(({ id, link }) => (
             <li
               key={id}
@@ -63,7 +63,7 @@ const NavBar = () => {
               </Link>
             </li>
           ))}
-        </ul>
+        </ul> */}
 
         <div className="flex-grow flex justify-center">
           <div className="relative right-20">
@@ -81,7 +81,7 @@ const NavBar = () => {
         </div>
         <div
           onClick={() => setNav(!nav)}
-          className="cursor-pointer pr-4 z-10 text-[#03b1fc] md:hidden"
+          className="cursor-pointer pr-4 z-10 text-gray-700 md:hidden"
         >
           {nav ? "✕" : "☰"}
         </div>
