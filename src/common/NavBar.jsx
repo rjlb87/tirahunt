@@ -45,12 +45,6 @@ const NavBar = () => {
             </div>
           </div>
         </div>
-        <div
-          onClick={() => setNav(!nav)}
-          className="cursor-pointer pr-4 z-10 text-[#03b1fc] md:hidden"
-        >
-          {nav ? "✕" : "☰"}
-        </div>
       </div>
     </>
   );
