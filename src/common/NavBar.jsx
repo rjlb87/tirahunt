@@ -15,7 +15,7 @@ const NavBar = () => {
   return (
     <>
       <div
-        className="bg-gray-100 border text-gray-800 text-center text- px-4 py-3 rounded relative"
+        className="bg-gray-300 border text-gray-800 text-center text- px-4 py-3 rounded relative"
         role="alert"
       >
         <span className="block sm:inline">Hey, </span>
