@@ -5,6 +5,12 @@ import { navlink } from "../utils/navlinks";
 
 const NavBar = () => {
   const [nav, setNav] = useState(false);
+  const [alert, setShowAlert] = useState(false);
+
+  const handleShow = () => {
+    setShowAlert(!alert);
+    console.log("napindot mo na");
+  };
 
   const handleCloseNav = () => {
     if (nav) {
@@ -13,29 +19,35 @@ const NavBar = () => {
   };
 
   return (
-    <>
-      <div
-        className="bg-gray-100 border text-gray-800 text-center text- px-4 py-3 rounded relative"
-        role="alert"
-      >
-        <span className="block sm:inline">Hey, </span>
-        <span className="block sm:inline font-semibold">
-          Where are you going?
-        </span>
-        <span className="absolute top-0 bottom-0 right-0 px-4 py-3">
-          <svg
-            className="fill-current h-6 w-6 text-gray-800"
-            role="button"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-          >
-            <title>Close</title>
-            <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />
-          </svg>
-        </span>
-      </div>
+    <div>
+      {!alert && (
+        <div
+          className="relative z-10 bg-gray-300 border text-gray-800 text-center text- px-4 py-3 rounded"
+          role="alert"
+        >
+          <div>
+            <span className="block sm:inline">Hey, </span>
+            <span className="block sm:inline font-semibold">
+              Where are you going?
+            </span>
+            <span className="absolute top-0 bottom-0 right-0 px-4 py-3">
+              <button onClick={handleShow}>
+                <svg
+                  className="fill-current h-6 w-6 text-gray-800"
+                  role="button"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                >
+                  <title>Close</title>
+                  <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />
+                </svg>
+              </button>
+            </span>
+          </div>
+        </div>
+      )}
 
-      <div className="z-50 fixed flex justify-between items-center w-full h-[92px] px-4 bg-white border nav">
+      <div className="relative flex justify-between items-center w-full h-[92px] px-4 bg-white border nav">
         <div className="flex items-center ml-4 pt-4">
           <Link to="Home" smooth={true} duration={500} onClick={handleCloseNav}>
             <button>
@@ -131,6 +143,7 @@ const NavBar = () => {
                   spy={true}
                   smooth={true}
                   duration={500}
+                  s
                   onClick={handleCloseNav}
                 >
                   {link}
@@ -140,7 +153,7 @@ const NavBar = () => {
           </ul>
         )}
       </div>
-    </>
+    </div>
   );
 };
 
