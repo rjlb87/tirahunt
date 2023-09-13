@@ -1,13 +1,15 @@
-import NavBar from './common/NavBar'
-import Home from './components/Home'
+import Footer from "./common/Footer";
+import NavBar from "./common/NavBar";
+import Home from "./components/Home";
 
 function App() {
   return (
     <>
-    <NavBar />
-    <Home />
+      <NavBar />
+      <Home />
+      <Footer />
     </>
-    )
+  );
 }
 
-export default App
+export default App;
