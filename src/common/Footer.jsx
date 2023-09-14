@@ -1,4 +1,5 @@
 import React from "react";
+import { FaFacebook, FaTwitter, FaInstagram } from "react-icons/fa";
 
 function Footer() {
   return (
@@ -13,13 +14,39 @@ function Footer() {
           </li>
         </ul>
         <div className="flex items-center ">
-          <ul className="flex justify-evenly text-gray-700">
+          <ul className="flex justify-center gap-5 text-gray-700">
             <li className="text-sm font-bold text-center mr-5">
               <a>English (US) </a>
             </li>
 
-            <li className="text-sm font-bold">
-              <a>Support & Resources</a>
+            <li>
+              <a
+                href="https://www.facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaFacebook size={20} />
+              </a>
+            </li>
+
+            <li>
+              <a
+                href="https://www.twitter.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaTwitter size={20} />
+              </a>
+            </li>
+
+            <li>
+              <a
+                href="https://www.instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaInstagram size={20} />
+              </a>
             </li>
           </ul>
         </div>
