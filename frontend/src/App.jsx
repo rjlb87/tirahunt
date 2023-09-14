@@ -8,6 +8,7 @@ function App() {
     <>
       <NavBar />
       <Home />
+      <LogIn />
       <Footer />
     </>
   );
