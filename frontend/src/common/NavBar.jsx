@@ -6,6 +6,14 @@ import { navlink } from "../utils/navlinks";
 const NavBar = () => {
   const [nav, setNav] = useState(false);
   const [alert, setShowAlert] = useState(false);
+  const [isDropdownOpen, setisDropdownopen] = useState(false);
+
+  const toggleDropdown = () => {
+    setisDropdownopen(!isDropdownOpen);
+  };
+  const closeDropdown = () => {
+    setisDropdownopen(false);
+  };
 
   const handleShow = () => {
     setShowAlert(!alert);
@@ -92,66 +100,94 @@ const NavBar = () => {
               d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
             />
           </svg>
-          {/* tirahunt login/signup icon */}
-          <div className="flex space-x-2 border rounded-full p-2">
-            <svg
-              className="h-6 cursor-pointer"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth="1"
+          <div className="relative">
+            {/* Profile icon */}
+            <div
+              className="flex space-x-2 border rounded-full p-2"
+              onClick={toggleDropdown}
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
-            <svg
-              className="h-6 cursor-pointer"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fillRule="evenodd"
-                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </div>
-        </div>
-
-        {/* Mobile navigation */}
-        <div
-          onClick={() => setNav(!nav)}
-          className="cursor-pointer pr-4 z-10 text-gray-700 md:hidden"
-        >
-          {nav ? "✕" : "☰"}
-        </div>
-        {nav && (
-          <ul className="flex flex-col absolute top-0 left-0 w-full h-screen bg-white">
-            {navlink.map(({ id, link }) => (
-              <li
-                key={id}
-                className="px-3 cursor-pointer font-medium text-black"
+              <svg
+                className="h-6 cursor-pointer"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth="1"
               >
-                <Link
-                  activeClass="active"
-                  to={link}
-                  spy={true}
-                  smooth={true}
-                  duration={500}
-                  s
-                  onClick={handleCloseNav}
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+              <svg
+                className="h-6 cursor-pointer"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </div>
+
+            {/* Dropdown */}
+            {isDropdownOpen && (
+              <div className="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg pt-2 pb-2 text-sm">
+                <ul>
+                  <li className="py-2 px-4 hover:bg-gray-100 cursor-pointer font-semibold">
+                    Sign up
+                  </li>
+                  <li className="py-2 px-4 hover:bg-gray-100 cursor-pointer">
+                    Log in
+                  </li>
+                  <li className="py-2 px-4 hover:bg-gray-100 cursor-pointer">
+                    Help Center
+                  </li>
+                </ul>
+              </div>
+            )}
+            {isDropdownOpen && (
+              <div
+                className="fixed inset-0 h-full w-full z-10"
+                onClick={closeDropdown}
+              ></div>
+            )}
+          </div>
+
+          {/* Mobile navigation */}
+          <div
+            onClick={() => setNav(!nav)}
+            className="cursor-pointer pr-4 z-10 text-gray-700 md:hidden"
+          >
+            {nav ? "✕" : "☰"}
+          </div>
+          {nav && (
+            <ul className="flex flex-col absolute top-0 left-0 w-full h-screen bg-white">
+              {navlink.map(({ id, link }) => (
+                <li
+                  key={id}
+                  className="px-3 cursor-pointer font-medium text-black"
                 >
-                  {link}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        )}
+                  <Link
+                    activeClass="active"
+                    to={link}
+                    spy={true}
+                    smooth={true}
+                    duration={500}
+                    s
+                    onClick={handleCloseNav}
+                  >
+                    {link}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
       </div>
     </div>
   );
