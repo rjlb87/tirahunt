@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-scroll";
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({
@@ -25,17 +26,20 @@ const LoginForm = () => {
         className="bg-white shadow-md rounded-lg py-6 w-96 flex flex-col items-center"
         onSubmit={handleSubmit}
       >
-        <p className="text-md font-semibold mb-4">Log in</p>
+        <p className="text-md font-bold mb-2">Log in</p>
         <hr className="w-full border-t border-gray-300 mb-6" />
-        <div className="w-full flex flex-col items-start px-6">
-          <p className="text-xl"> Welcome back to</p>
-          <p className="text-xl inline"> tirahunt.</p>
+        <div className="w-full flex flex-col items-start px-6 text-xl font-semibold">
+          <div className="flex-col">
+            <p className="inline text-gray-700">Welcome back to</p>
+            <p className="inline text-[#92c872]"> tirahunt.</p>
+          </div>
+
           <label
             className="block text-gray-700 text-sm font-bold mt-8"
             htmlFor="email"
           ></label>
           <input
-            className=" text-sm rounded-tr rounded-tl border border-gray-300 w-full py-2 px-3 text-gray-700 "
+            className=" text-sm rounded-tr-lg rounded-tl-lg border border-gray-300 w-full py-4 px-3 text-gray-700 "
             id="email"
             type="email"
             name="email"
@@ -51,7 +55,7 @@ const LoginForm = () => {
             htmlFor="password"
           ></label>
           <input
-            className=" text-sm rounded-br rounded-bl border border-gray-300 w-full py-2 px-3 text-gray-700 "
+            className=" font-semibold text-sm rounded-br-lg rounded-bl-lg border-b border-l border-r border-gray-300 w-full py-4 px-3 text-gray-700 "
             id="password"
             type="password"
             name="password"
@@ -61,13 +65,19 @@ const LoginForm = () => {
             required
           />
         </div>
-        <div className="flex items-center justify-between w-full px-6">
+        <div className="flex flex-col w-full px-6">
           <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="bg-[#92c872] hover:bg-[#6b9b53] active:bg-[#4a6d39] transition-opacity duration-200 hover:opacity-80 active:opacity-60 text-white font-semibold py-2 px-4 rounded-xl focus:outline-none focus:shadow-outline w-full"
             type="submit"
           >
-            Sign In
+            Log in
           </button>
+          <div className="text-gray-700  text-sm mt-8 mb-4 space-x-3">
+            <p className="inline text-gray-700"> Don&apos;t have an account?</p>
+            <p className="inline text-gray-700 font-semibold border-b-2 border-gray-800">
+              Sign up
+            </p>
+          </div>
         </div>
       </form>
     </div>
