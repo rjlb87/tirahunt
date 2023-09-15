@@ -1,5 +1,7 @@
 const { connect } = require("../config/db");
 const bcrypt = require('bcryptjs');
+const { generateAccessToken } = require('../config/jwt')
+
 
 
 class UserController {
@@ -71,6 +73,58 @@ class UserController {
       console.log('Error', error)
     }
   }
+
+  async userlogin(users) {    
+    try {
+        const password = users.password
+
+        const user = await this.db.users.findOne({
+            where: {
+                email: users.email,
+            },
+        })
+
+        if (!user) {
+            throw new Error('The user does not exist')
+        } else {
+            try {
+                const passwordMatch = await bcrypt.compare(
+                    password,
+                    user.password
+                )
+
+                if (passwordMatch) {
+                    const generatedToken = generateAccessToken({
+                        email: users.email,
+                    })
+                    if (generatedToken) {
+                        const verifiedUserData =
+                            await this.db.users.findOne({
+                                where: { id: user.id },
+                            })
+
+                        const generatedTokenObject = {
+                            jwt: generatedToken,
+                            // userRole: verifiedUserData.role_id,
+                        }
+                        const updatedData = [
+                            generatedTokenObject,
+                            // verifiedUserData,
+                        ]
+
+                        return updatedData
+                    }
+                } else {
+                    throw new Error('The user password is incorrect')
+                }
+            } catch (error) {
+                console.log('Error: ', error)
+            }
+        }
+    } catch (error) {
+        console.log('Error: ', error)
+    }
+}
 
 }
 module.exports = new UserController();
