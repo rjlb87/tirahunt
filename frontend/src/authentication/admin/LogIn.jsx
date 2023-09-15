@@ -43,16 +43,16 @@ const LoginForm = () => {
           </div>
           <label
             className=" text-gray-700 text-sm font-bold mt-4"
-            htmlFor="username"
+            htmlFor="email"
           ></label>
           <input
             className="text-sm border rounded-tr-lg rounded-tl-lg border-gray-300 w-full py-4 px-3 text-gray-700 "
-            id="username"
-            type="username"
-            name="username"
-            value={formData.username}
+            id="email"
+            type="email"
+            name="email"
+            value={formData.email}
             onChange={handleChange}
-            placeholder="Username"
+            placeholder="Email"
             required
           />
         </div>
