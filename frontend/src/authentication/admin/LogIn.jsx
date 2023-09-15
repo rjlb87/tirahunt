@@ -42,25 +42,11 @@ const LoginForm = () => {
             <p className="inline text-[#92c872]"> tirahunt.</p>
           </div>
           <label
-            className="block text-gray-700 text-sm font-bold mt-8"
-            htmlFor="username"
-          ></label>
-          <input
-            className="text-sm rounded-tr-lg rounded-tl-lg border-l border-t border-r border-gray-300 w-full py-4 px-3 text-gray-700 "
-            id="username"
-            type="username"
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
-            placeholder="Username"
-            required
-          />
-          <label
-            className="block text-gray-700 text-sm font-bold"
+            className=" text-gray-700 text-sm font-bold mt-4"
             htmlFor="email"
           ></label>
           <input
-            className="text-sm border border-gray-300 w-full py-4 px-3 text-gray-700 "
+            className="text-sm border rounded-tr-lg rounded-tl-lg border-gray-300 w-full py-4 px-3 text-gray-700 "
             id="email"
             type="email"
             name="email"
