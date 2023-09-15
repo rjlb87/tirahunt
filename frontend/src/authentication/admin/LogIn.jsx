@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-scroll";
+import { AiOutlineClose } from "react-icons/ai";
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({
@@ -23,23 +23,44 @@ const LoginForm = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <form
-        className="bg-white shadow-md rounded-lg py-6 w-96 flex flex-col items-center"
+        className="bg-white shadow-md rounded-lg w-96 flex flex-col relative"
         onSubmit={handleSubmit}
       >
-        <p className="text-md font-bold mb-2">Log in</p>
+        <button
+          className="absolute top-2 left-4 h-10 w-6  text-gray-800"
+          onClick={() => {
+            // Handle close button click here
+          }}
+        >
+          <AiOutlineClose />
+        </button>
+        <p className="text-md font-bold text-center mt-4 pb-2">Log in</p>
         <hr className="w-full border-t border-gray-300 mb-6" />
         <div className="w-full flex flex-col items-start px-6 text-xl font-semibold">
           <div className="flex-col">
             <p className="inline text-gray-700">Welcome back to</p>
             <p className="inline text-[#92c872]"> tirahunt.</p>
           </div>
-
           <label
             className="block text-gray-700 text-sm font-bold mt-8"
+            htmlFor="username"
+          ></label>
+          <input
+            className="text-sm rounded-tr-lg rounded-tl-lg border-l border-t border-r border-gray-300 w-full py-4 px-3 text-gray-700 "
+            id="username"
+            type="username"
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
+            placeholder="Username"
+            required
+          />
+          <label
+            className="block text-gray-700 text-sm font-bold"
             htmlFor="email"
           ></label>
           <input
-            className=" text-sm rounded-tr-lg rounded-tl-lg border border-gray-300 w-full py-4 px-3 text-gray-700 "
+            className="text-sm border border-gray-300 w-full py-4 px-3 text-gray-700 "
             id="email"
             type="email"
             name="email"
@@ -55,7 +76,7 @@ const LoginForm = () => {
             htmlFor="password"
           ></label>
           <input
-            className=" font-semibold text-sm rounded-br-lg rounded-bl-lg border-b border-l border-r border-gray-300 w-full py-4 px-3 text-gray-700 "
+            className="font-semibold text-sm rounded-br-lg rounded-bl-lg border-b border-l border-r border-gray-300 w-full py-4 px-3 text-gray-700 "
             id="password"
             type="password"
             name="password"
@@ -72,9 +93,9 @@ const LoginForm = () => {
           >
             Log in
           </button>
-          <div className="text-gray-700  text-sm mt-8 mb-4 space-x-3">
-            <p className="inline text-gray-700"> Don&apos;t have an account?</p>
-            <p className="inline text-gray-700 font-semibold border-b-2 border-gray-800">
+          <div className="text-gray-700 text-sm mt-8 mb-4 space-x-3 text-start pb-2">
+            <p className="inline">Don&apos;t have an account?</p>
+            <p className="inline font-semibold border-b-2 border-gray-800 cursor-pointer">
               Sign up
             </p>
           </div>
