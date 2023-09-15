@@ -1,6 +1,10 @@
 export async function getAllusers() {
-  const response = await fetch("/api/v1/users");
-  return await response.json();
+  try {
+    const response = await fetch("/api/v1/users");
+    return await response.json();
+  } catch (error) {
+    console.error(error.message);
+  }
 }
 
 export async function editusers(data) {
