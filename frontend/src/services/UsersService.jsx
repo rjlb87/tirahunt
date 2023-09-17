@@ -7,7 +7,7 @@ export async function getAllusers() {
   }
 }
 
-export async function editusers(data) {
+export async function editUsers(data) {
   const response = await fetch(`/api/v1/users`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
