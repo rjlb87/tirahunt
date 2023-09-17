@@ -30,7 +30,7 @@ const NavBar = () => {
     <div>
       {!alert && (
         <div
-          className="relative z-10 bg-gray-300 border text-gray-800 text-center text- px-4 py-3 rounded"
+          className="relative z-10 bg-gray-100 border text-gray-800 text-center text- px-4 py-3 rounded"
           role="alert"
         >
           <div>
