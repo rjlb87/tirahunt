@@ -82,9 +82,6 @@ function AdminDashboard() {
               <td className="border-gray-500 px-6  bg-gray-600  text-center text-white font-light">
                 {users.email}
               </td>
-              <td className="border-gray-500 px-6  bg-gray-600  text-center text-white font-light">
-                {users.email}
-              </td>
               <td className="border-gray-500 bg-gray-600">
                 <Edit users={users} />
               </td>
