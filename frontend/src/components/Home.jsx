@@ -3,7 +3,7 @@ import { cards } from "../utils/cards";
 
 function Home() {
   return (
-    <div className="max-w-6xl mx-auto h-fit my-20">
+    <div className="max-w-6xl mx-auto h-fit mt-10">
       <div className="flex flex-col justify-center ">
         <ul className="grid grid-cols-4">
           {cards.map(
@@ -20,7 +20,7 @@ function Home() {
               rating,
             }) => (
               <li
-                className="ml-4 border-2 shadow-md shadow-gray-500 my-4 border-gray-100 rounded-md"
+                className="ml-4 border-2 shadow-md shadow-gray-500 mb-8 border-gray-100 rounded-md"
                 key={id}
               >
                 <li>
