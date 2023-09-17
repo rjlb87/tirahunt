@@ -27,7 +27,7 @@ const LoginForm = () => {
         onSubmit={handleSubmit}
       >
         <button
-          className="absolute top-2 left-4 h-10 w-6  text-gray-800"
+          className="absolute top-2 right-4 h-10 w-6 text-gray-800"
           onClick={() => {
             // Handle close button click here
           }}
@@ -79,7 +79,7 @@ const LoginForm = () => {
           >
             Log in
           </button>
-          <div className="text-gray-700 text-sm mt-8 mb-4 space-x-3 text-start pb-2">
+          <div className="text-gray-700 text-sm mt-8 mb-4 space-x-3 text-center pb-2">
             <p className="inline">Don&apos;t have an account?</p>
             <p className="inline font-semibold border-b-2 border-gray-800 cursor-pointer">
               Sign up

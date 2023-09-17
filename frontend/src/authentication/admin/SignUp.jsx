@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { createUsers } from "../../services/UsersService";
 
-const LoginForm = () => {
+const Signup = () => {
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -15,7 +15,7 @@ const LoginForm = () => {
       ...formdata,
       [name]: value,
     }));
-  }; 
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -34,14 +34,14 @@ const LoginForm = () => {
         onSubmit={handleSubmit}
       >
         <button
-          className="absolute top-2 left-4 h-10 w-6  text-gray-800"
+          className="absolute top-2 right-4 h-10 w-6 text-gray-800"
           onClick={() => {
             // Handle close button click here
           }}
         >
           <AiOutlineClose />
         </button>
-        <p className="text-md font-bold text-center mt-4 pb-2">Log in</p>
+        <p className="text-md font-bold text-center mt-4 pb-2">Sign up</p>
         <hr className="w-full border-t border-gray-300 mb-6" />
         <div className="w-full flex flex-col items-start px-6 text-xl font-semibold">
           <div className="flex-col">
@@ -63,11 +63,11 @@ const LoginForm = () => {
             required
           />
           <label
-            className=" text-gray-700 text-sm font-bold mt-4"
+            className=" text-gray-700 text-sm font-bold"
             htmlFor="email"
           ></label>
           <input
-            className="text-sm border rounded-tr-lg rounded-tl-lg border-gray-300 w-full py-4 px-3 text-gray-700 "
+            className="text-sm border-l border-r border-b   border-gray-300 w-full py-4 px-3 text-gray-700 "
             id="email"
             type="email"
             name="email"
@@ -98,12 +98,12 @@ const LoginForm = () => {
             className="bg-[#92c872] hover:bg-[#6b9b53] active:bg-[#4a6d39] transition-opacity duration-200 hover:opacity-80 active:opacity-60 text-white font-semibold py-2 px-4 rounded-xl focus:outline-none focus:shadow-outline w-full"
             type="submit"
           >
-            Log in
+            Sign up
           </button>
-          <div className="text-gray-700 text-sm mt-8 mb-4 space-x-3 text-start pb-2">
-            <p className="inline">Don&apos;t have an account?</p>
+          <div className="text-gray-700 text-sm mt-8 mb-4 space-x-3 text-center pb-2">
+            <p className="inline">Already have an account?</p>
             <p className="inline font-semibold border-b-2 border-gray-800 cursor-pointer">
-              Sign up
+              Log in
             </p>
           </div>
         </div>
@@ -112,4 +112,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default Signup;
