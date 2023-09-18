@@ -3,7 +3,7 @@ import { FaFacebook, FaTwitter, FaInstagram } from "react-icons/fa";
 
 function Footer() {
   return (
-    <div className="flex flex-col h-20 w-full py-10 px-5 mt-10 bg-white text-gray-500 font-poppins">
+    <div className="flex flex-col h-20 w-full px-40 py-0 mt-0 bg-white text-gray-500 font-poppins">
       <div className="flex justify-between">
         <ul className="flex flex-row gap-5 text-black mt-0 py-8">
           <li className="text-sm">
