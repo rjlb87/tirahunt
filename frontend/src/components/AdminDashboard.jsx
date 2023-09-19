@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { getAllusers, deleteUsers } from "../services/UsersService";
 import Edit from "./EditButton";
 import ReactPaginate from "react-paginate";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function AdminDashboard() {
   const [users, setUsers] = useState([]);
@@ -25,11 +27,14 @@ function AdminDashboard() {
       const success = await deleteUsers(id);
       if (success) {
         setUsers((prevUsers) => prevUsers.filter((u) => u.id !== id));
+        toast.success("User Succesfully Deleted!");
       }
     } catch (error) {
+      toast.error("User Doesn't Exist!");
       console.error(error.message);
     }
   };
+
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -39,8 +44,12 @@ function AdminDashboard() {
         console.error(error.message);
       }
     };
-
-    fetchUsers();
+    const interval = setInterval(() => {
+      fetchUsers();
+    }, 1000);
+    return () => {
+      clearInterval(interval);
+    };
   }, []);
 
   return (
@@ -48,11 +57,11 @@ function AdminDashboard() {
       <div className="flex justify-center items-center uppercase my-5 text-2xl text-gray-800">
         <h1 className="font-bold tracking-wider pb-10 pt-10">Users</h1>
       </div>
-      <table className=" mx-auto border-collapse">
+      <table className=" mx-auto border-collapse ">
         <thead>
-          <tr className="bg-gray-800">
-            <th className=" px-6  text-xs font-semibold text-white">#</th>
-            <th className=" px-6  text-xs font-semibold uppercase text-white">
+          <tr className="bg-[#92c872]">
+            <th className=" px-6  text-xs font-semibold text-white ">#</th>
+            <th className=" px-6  text-xs font-semibold uppercase text-white ">
               Username
             </th>
             <th className=" px-6  text-xs font-semibold uppercase text-white">
@@ -71,24 +80,24 @@ function AdminDashboard() {
           {currentData.map((users, index) => (
             <tr
               key={users.id}
-              className="hover:bg-gray-100 transition-colors text-xs"
+              className="hover:bg-gray-100 transition-colors text-sm  border-gray-300"
             >
-              <td className=" border-gray-500 px-6  bg-gray-600 text-center text-white font-semibold">
+              <td className=" border-gray-500 px-6  bg-gray-100 text-center text-gray-800 font-bold">
                 {startIndex + index}
               </td>
-              <td className="border-gray-500 px-6  bg-gray-600  text-center text-white font-light">
+              <td className="border-gray-500 px-6  bg-gray-100  text-center text-gray-800 font-semibold">
                 {users.username}
               </td>
-              <td className="border-gray-500 px-6  bg-gray-600  text-center text-white font-light">
+              <td className="border-gray-500 px-6  bg-gray-100 text-center text-gray-800 font-semibold ">
                 {users.email}
               </td>
-              <td className="border-gray-500 bg-gray-600">
+              <td className="border-gray-500 bg-gray-100 ">
                 <Edit users={users} />
               </td>
-              <td className="border-gray-500  bg-gray-600">
+              <td className="border-gray-500  bg-gray-100">
                 <td className="flex justify-center group py-4 px-6">
                   <button
-                    className=" bg-gray-800 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
+                    className=" bg-gray-800 hover:bg-red-600 text-white font-bold py-2 px-4 "
                     onClick={() => handleDeleteUsers(users.id)}
                   >
                     Delete
@@ -122,6 +131,7 @@ function AdminDashboard() {
           />
         </nav>
       </div>
+      <ToastContainer />
     </div>
   );
 }

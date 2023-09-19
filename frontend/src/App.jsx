@@ -14,7 +14,7 @@ function App() {
       <Home />
       <Signup />
       <LogIn />
-      {/* <AdminDashboard /> */}
+      <AdminDashboard />
       <Footer />
     </>
   );
