@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ImageUpload from "../components/ImageUpload ";
 import { createProperty } from "../services/PropertyListings";
-import { AiOutlineClose } from "react-icons/ai";
+import { AiOutlineClose } from "../icons/icons";
 
 
 const PropertyForm = () => {

@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { getAllProperties } from "../services/PropertyListings";
 import PropertyForm from "./PropertyForm";
+import {
+  FaLocationDot,
+  ImPriceTag,
+  FaBed,
+  FaShower,
+  BsFillPersonFill,
+  BsFillHouseDoorFill,
+  MdLiving,
+} from "../icons/icons";
 
 function Home() {
   const [properties, setProperties] = useState([]);
@@ -39,32 +48,47 @@ function Home() {
           Add
         </button>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {properties.map((property) => (
           <div
             key={property.property_id}
-            className="bg-white p-4 rounded shadow"
+            className="bg-white p-4 rounded shadow flex flex-col items-start"
           >
             <img
               src={"./public/img_1.jpg"}
               alt="Property"
-              className="w-full h-auto"
+              className="w-full h-auto mb-4"
             />
             <h2 className="text-xl font-semibold">{property.description}</h2>
-            <p className="text-gray-600">Location: {property.location}</p>
-            <p className="text-gray-600">
-              Price: {formatPrice(parseFloat(property.price))}
+            <p className="text-gray-600 flex items-center">
+              <FaLocationDot className="mr-2" />
+              {property.location}
             </p>
-            <p className="text-gray-600">Bedrooms: {property.bedrooms}</p>
-            <p className="text-gray-600">Bathrooms: {property.bathrooms}</p>
-            <p className="text-gray-600">
-              Living Rooms: {property.living_rooms}
+            <p className="text-gray-600 flex items-center">
+              <ImPriceTag className="mr-2" />
+              {formatPrice(parseFloat(property.price))}
+            </p>
+            <p className="text-gray-600 flex items-center">
+              <FaBed className="mr-2" />
+              {property.bedrooms}
+            </p>
+            <p className="text-gray-600 flex items-center">
+              <FaShower className="mr-2" />
+              {property.bathrooms}
+            </p>
+            <p className="text-gray-600 flex items-center">
+              <MdLiving className="mr-2" />
+              {property.living_rooms}
             </p>
             <p className="text-gray-600">Rating: {property.rating}</p>
-            <p className="text-gray-600">
-              Property Type: {property.property_type}
+            <p className="text-gray-600 flex items-center">
+              <BsFillHouseDoorFill className="mr-2" />
+              {property.property_type}
             </p>
-            <p className="text-gray-600">Username: {property.users.username}</p>
+            <p className="text-gray-600 flex items-center">
+              <BsFillPersonFill className="mr-2" />
+              {property.users.username}
+            </p>
           </div>
         ))}
       </div>
