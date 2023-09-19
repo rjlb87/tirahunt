@@ -1,0 +1,228 @@
+import React, { useState } from "react";
+import ImageUpload from "../components/ImageUpload ";
+import { createProperty } from "../services/PropertyListings";
+
+const PropertyForm = () => {
+  const [property, setProperty] = useState({
+    user_id: "",
+    description: "",
+    location: "",
+    price: "",
+    bedrooms: "",
+    bathrooms: "",
+    living_rooms: "",
+    rating: "",
+    property_type: "",
+    image_id: "",
+  });
+
+  const [imageId, setImageId] = useState(""); 
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    if (name === "price") {
+      const formattedPrice = formatPrice(value);
+      setProperty({ ...property, [name]: formattedPrice });
+    } else {
+      setProperty({ ...property, [name]: value });
+    }
+  };
+
+  const handleImageUpload = (id) => {
+    setImageId(id); 
+  };
+  const formatPrice = (price) => {
+    price = price.replace(/[^\d]/g, "");
+
+    const parts = price.split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return parts.join(".");
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!imageId) {
+      alert("Please upload an image.");
+      return;
+    }
+
+    try {
+      const newProperty = await createProperty({
+        ...property,
+        image_id: imageId,
+      });
+      console.log("Property created successfully:", newProperty);
+    } catch (error) {
+      console.error("Error creating property", error);
+    }
+  };
+
+  return (
+    <div className="max-w-md mx-auto mt-8 p-4 bg-white rounded-lg shadow-lg">
+      <h2 className="text-2xl font-semibold mb-4">Add a New Property</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="grid grid-cols-2 gap-4">
+          <div className="mb-4">
+            <label
+              htmlFor="description"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Description:
+            </label>
+            <input
+              type="text"
+              name="description"
+              id="description"
+              value={property.description}
+              onChange={handleChange}
+              required
+              className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:ring focus:ring-blue-200 focus:outline-none"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="location"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Location:
+            </label>
+            <input
+              type="text"
+              name="location"
+              id="location"
+              value={property.location}
+              onChange={handleChange}
+              required
+              className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:ring focus:ring-blue-200 focus:outline-none"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="price"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Price:
+            </label>
+            <input
+            type="text"
+            name="price"
+            id="price"
+            value={property.price}
+            onChange={handleChange}
+            required
+            pattern="[0-9,]*"
+            title="Please enter only numeric characters and commas."
+            className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:ring focus:ring-blue-200 focus:outline-none"
+          />
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="bedrooms"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Bedrooms:
+            </label>
+            <input
+              type="number"
+              name="bedrooms"
+              id="bedrooms"
+              value={property.bedrooms}
+              onChange={handleChange}
+              required
+              className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:ring focus:ring-blue-200 focus:outline-none"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="bathrooms"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Bathrooms:
+            </label>
+            <input
+              type="number"
+              name="bathrooms"
+              id="bathrooms"
+              value={property.bathrooms}
+              onChange={handleChange}
+              required
+              className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:ring focus:ring-blue-200 focus:outline-none"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="living_rooms"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Living Rooms:
+            </label>
+            <input
+              type="number"
+              name="living_rooms"
+              id="living_rooms"
+              value={property.living_rooms}
+              onChange={handleChange}
+              required
+              className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:ring focus:ring-blue-200 focus:outline-none"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="rating"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Rating:
+            </label>
+            <input
+              type="number"
+              name="rating"
+              id="rating"
+              value={property.rating}
+              onChange={handleChange}
+              min="1"
+              max="5"
+              className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:ring focus:ring-blue-200 focus:outline-none"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="property_type"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Property Type:
+            </label>
+            <select
+              name="property_type"
+              id="property_type"
+              value={property.property_type}
+              onChange={handleChange}
+              required
+              className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:ring focus:ring-blue-200 focus:outline-none"
+            >
+              <option value="">Select Property Type</option>
+              <option value="House">House</option>
+              <option value="Apartment">Apartment</option>
+              <option value="Bed Space">Bed Space</option>
+            </select>
+          </div>
+        </div>
+        <div className="mb-4">
+          <ImageUpload
+            setPropertyImageId={(imageId) => handleImageUpload(imageId)}
+          />
+        </div>
+        <div className="text-center">
+          <button
+            type="submit"
+            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-200"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+export default PropertyForm;
