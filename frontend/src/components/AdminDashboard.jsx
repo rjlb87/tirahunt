@@ -85,15 +85,13 @@ function AdminDashboard() {
               <td className="border-gray-500 bg-gray-600">
                 <Edit users={users} />
               </td>
-              <td className="border-gray-500  bg-gray-600">
-                <td className="flex justify-center group py-4 px-6">
-                  <button
-                    className=" bg-gray-800 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
-                    onClick={() => handleDeleteUsers(users.id)}
-                  >
-                    Delete
-                  </button>
-                </td>
+              <td className="border-gray-500 bg-gray-600 ">
+                <button
+                  className="bg-gray-800 hover:bg-red-600 text-white font-bold py-2 px-4 mx-10 rounded"
+                  onClick={() => handleDeleteUsers(users.id)}
+                >
+                  Delete
+                </button>
               </td>
             </tr>
           ))}
