@@ -18,7 +18,7 @@ const ImageUpload = () => {
     }
 
     try {
-      await uploadFiles(1, files);
+      await uploadFiles(files);
       console.log("Uploaded files: ", files);
       setFiles([]);
     } catch (error) {

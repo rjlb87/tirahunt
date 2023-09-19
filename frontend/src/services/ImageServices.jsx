@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 
-export const uploadFiles = async (id, files) => {
+export const uploadFiles = async ( files) => {
   try {
     if (files.length > 4) {
       toast.error('Maximum upload of 4 files exceeded');
@@ -11,7 +11,6 @@ export const uploadFiles = async (id, files) => {
     files.forEach((file) => {
       formData.append('files', file);
     });
-    formData.append('id', id);
 
     const response = await fetch('/api/v1/upload', {
       method: 'POST',
