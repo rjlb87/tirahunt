@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { getAllProperties } from "../services/PropertyListings";
+import PropertyForm from "./PropertyForm";
 
 function Home() {
   const [properties, setProperties] = useState([]);
+  const [showForm, setShowForm] = useState(false);
+
+  const handleAddClick = () => {
+    setShowForm(!showForm);
+  };
 
   const formatPrice = (price) => {
     const formattedPrice = price.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
@@ -24,7 +30,15 @@ function Home() {
 
   return (
     <div className="h-screen max-w-6xl mx-auto mt-10">
-      <h1 className="text-3xl font-semibold mb-4">Property List</h1>
+      <div className="flex justify-between items-center">
+        <h1 className="text-3xl font-semibold mb-4">Property List</h1>
+        <button
+          className="bg-[#92c872] rounded-lg text-white w-[15%]"
+          onClick={handleAddClick}
+        >
+          Add
+        </button>
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ">
         {properties.map((property) => (
           <div
@@ -32,7 +46,7 @@ function Home() {
             className="bg-white p-4 rounded shadow"
           >
             <img
-              src={'./public/img_1.jpg'}
+              src={"./public/img_1.jpg"}
               alt="Property"
               className="w-full h-auto"
             />
@@ -54,6 +68,7 @@ function Home() {
           </div>
         ))}
       </div>
+      {showForm && <PropertyForm />}
     </div>
   );
 }
