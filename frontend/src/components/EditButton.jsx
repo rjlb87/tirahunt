@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { editUsers } from "../services/UsersService";
+import { AiOutlineClose } from "react-icons/ai";
 
 const EditDashboard = ({ users }) => {
+  const [showModal, setShowModal] = useState(false);
+
   const [userDetails, setUserDetails] = useState({
     id: users.id ?? "",
     username: users.username ?? "",
@@ -13,17 +16,21 @@ const EditDashboard = ({ users }) => {
     setUserDetails((prev) => {
       return { ...prev, [name]: value };
     });
-    console.log(name, value);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    editUsers(userDetails).then(console.log(userDetails));
+    editUsers(userDetails)
+      .then((response) => {
+        console.log(response);
+        toggleModal();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
-  const [showModal, setShowModal] = useState(false);
-
-  const toggleModal = (e) => {
+  const toggleModal = () => {
     setShowModal(!showModal);
   };
 
@@ -31,7 +38,7 @@ const EditDashboard = ({ users }) => {
     <div>
       <div className="py-4 mx-10 h-auto">
         <button
-          className=" bg-gray-800 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded"
+          className="bg-gray-800 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded"
           onClick={toggleModal}
         >
           Edit
@@ -39,52 +46,65 @@ const EditDashboard = ({ users }) => {
       </div>
 
       {showModal && (
-        <div className="fixed z-10 inset-0 overflow-y-auto">
-          <div className="mt-40 flex items-center justify-center">
-            <div className="bg-gray-900 rounded-lg text-white ">
-              <div className="p-10">
-                <h2 className="text-lg text-white font-bold pb-10">
-                  Users&apos;s Information
-                </h2>
-                <div className="mb-4 text-sm">
-                  <input
-                    className="bg-slate-500 rounded-md mt-2 px-6 py-2"
-                    type="text"
-                    name="username"
-                    placeholder="First Name"
-                    defaultValue={users.username}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="mb-4 text-sm">
-                  <input
-                    className="bg-slate-500 rounded-md px-6 py-2"
-                    type="text"
-                    name="email"
-                    placeholder="Last Name"
-                    defaultValue={users.email}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="flex justify-end mt-10">
-                  <button
-                    className=" text-sm bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-md"
-                    onClick={(e) => {
-                      handleSubmit(e);
-                      toggleModal();
-                    }}
-                  >
-                    Save
-                  </button>
-                  <div className="px-6">
-                    <button
-                      className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-md text-sm"
-                      onClick={toggleModal}
+        <div className="fixed inset-0 flex items-center justify-center z-50 overflow-x-hidden overflow-y-auto outline-none focus:outline-none">
+          <div className="relative w-auto max-w-3xl mx-auto">
+            <div className="bg-white rounded-lg shadow-lg">
+              <div className="p-2 border-b border-solid rounded-t flex justify-center">
+                <p className="text-md font-semibold text-center py-2 w-full">
+                  Edit User
+                </p>
+                <button
+                  className="  bg-transparent  text-black   leading-none font-semibold "
+                  onClick={toggleModal}
+                >
+                  <span className="absolute  right-4 top-2 pt-2 text-gray-800">
+                    <AiOutlineClose size={15} />
+                  </span>
+                </button>
+              </div>
+              <div className="relative p-6 flex-auto">
+                <form onSubmit={handleSubmit}>
+                  <div className="mb-4">
+                    <label
+                      className="block text-gray-700 text-sm font-semibold mb-2"
+                      htmlFor="username"
                     >
-                      Cancel
+                      Username
+                    </label>
+                    <input
+                      className="bg-white rounded-md px-4 py-2 border  focus:ring-gray-400 w-full"
+                      type="text"
+                      name="username"
+                      placeholder="Username"
+                      value={userDetails.username}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label
+                      className="block text-gray-700 text-sm font-semibold mb-2"
+                      htmlFor="email"
+                    >
+                      Email
+                    </label>
+                    <input
+                      className="bg-white rounded-md px-4 py-2 border  focus:ring-gray-400 w-full"
+                      type="text"
+                      name="email"
+                      placeholder="Email"
+                      value={userDetails.email}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="flex justify-start">
+                    <button
+                      className="bg-[#92c872] hover:bg-[#77af57] text-white font-bold py-2 px-4 rounded-md w-full"
+                      type="submit"
+                    >
+                      Save
                     </button>
                   </div>
-                </div>
+                </form>
               </div>
             </div>
           </div>
@@ -93,4 +113,5 @@ const EditDashboard = ({ users }) => {
     </div>
   );
 };
+
 export default EditDashboard;
