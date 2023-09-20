@@ -5,6 +5,7 @@ import ReactPaginate from "react-paginate";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FaUsers } from "react-icons/fa";
+import { MdDashboard } from "react-icons/md";
 
 function AdminDashboard() {
   const [users, setUsers] = useState([]);
@@ -74,30 +75,33 @@ function AdminDashboard() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-200 px-20 py-10">
-      <div className="text-center uppercase my-5 text-2xl text-gray-800 pb-10">
-        <h1 className="font-bold tracking-wider">Admin Dashboard</h1>
+    <div className="min-h-screen bg-gray-200 px-20 py-20">
+      <div className="text-start my-10 text-2xl text-gray-800 px-10">
+        <h1 className="font-bold tracking-wider inline-flex items-center">
+          <MdDashboard size={40} className="mr-2" /> Welcome, user!
+        </h1>
       </div>
 
-      <div className="bg-[#92c872]  p-4 rounded-tl rounded-tr border">
+      <div className="bg-[#92c872]  p-4 rounded-tl rounded-tr border mx-10">
         <div className="flex justify-between items-center">
-          <div className="space-x-6">
-            <p className="text-lg text-gray-800 font-bold">
-              Total Users:{" "}
-              <span className={`text-white-600 font-bold text-lg`}>
+          <div className="space-x-10">
+            <p className="text-md text-gray-100 font-bold inline-flex">
+              <FaUsers size={30} className="mr-2 text-gray-100" />
+              Total Users:
+              <span className={`text-blue-600 font-bold text-md mr-10 px-2`}>
                 {totalUsers}
-              </span>{" "}
-              | Total Renters{" "}
-              <span className={`text-gray-600 font-bold text-lg`}>
+              </span>
+              Total Renters:{" "}
+              <span className={`text-blue-600 font-bold text-md px-2`}>
                 {totalRenters}
               </span>
             </p>
           </div>
 
-          <div className="flex justify-end w-1/2 md:w-1/4 lg:w-1/4">
+          <div className="flex justify-end w-1/2 md:w-1/4 lg:w-1/4 text-sm px-10">
             <input
               type="text"
-              placeholder="Search by username or email"
+              placeholder="Search username or email"
               className="border rounded py-2 px-4 w-full"
               value={searchTerm}
               onChange={handleSearchInputChange}
@@ -106,7 +110,7 @@ function AdminDashboard() {
         </div>
       </div>
 
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto px-10 ">
         <table className="min-w-full border-collapse rounded-lg">
           <thead>
             <tr className="bg-[#92c872] text-white">

@@ -5,7 +5,7 @@ import { AiOutlineCloseCircle, AiOutlineClose } from "react-icons/ai";
 import { FaHome, FaBuilding, FaBed } from "react-icons/fa";
 import { FaLocationDot, FaShower } from "react-icons/fa6";
 import { ImPriceTag } from "react-icons/im";
-import { MdLiving } from "react-icons/md";
+import { MdLiving, MdDashboard } from "react-icons/md";
 import { BsFillHouseDoorFill, BsFillPersonFill } from "react-icons/bs";
 
 export {
@@ -24,4 +24,5 @@ export {
   FaBuilding,
   FaBed,
   FaUsers,
+  MdDashboard,
 };
