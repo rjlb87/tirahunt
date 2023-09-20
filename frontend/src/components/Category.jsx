@@ -13,7 +13,7 @@ const Category = () => {
   };
 
   return (
-    <div className="flex justify-center items-center mt-10">
+    <div className="flex justify-center items-center mt-10 mb-8">
       <ul className="flex">
         <li
           className={`px-8 flex flex-col items-center ${

@@ -6,7 +6,6 @@ const EditDashboard = ({ users }) => {
     id: users.id ?? "",
     username: users.username ?? "",
     email: users.email ?? "",
-    password: users.password ?? "",
   });
 
   const handleChange = (e) => {
@@ -27,7 +26,6 @@ const EditDashboard = ({ users }) => {
   const toggleModal = (e) => {
     setShowModal(!showModal);
   };
-  // useEffect(() => {}, [])
 
   return (
     <div>
@@ -68,17 +66,6 @@ const EditDashboard = ({ users }) => {
                     onChange={handleChange}
                   />
                 </div>
-                <div className="mb-4 text-sm">
-                  <input
-                    className="bg-slate-500 rounded-md px-6 py-2"
-                    type="text"
-                    name="password"
-                    placeholder="Password"
-                    defaultValue={users.password}
-                    onChange={handleChange}
-                  />
-                </div>
-
                 <div className="flex justify-end mt-10">
                   <button
                     className=" text-sm bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-md"
