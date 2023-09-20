@@ -1,6 +1,6 @@
 import { BiHomeSmile } from "react-icons/bi";
 import { TbArrowRoundaboutRight } from "react-icons/tb";
-import { FaSearch } from "react-icons/fa";
+import { FaSearch, FaUsers } from "react-icons/fa";
 import { AiOutlineCloseCircle, AiOutlineClose } from "react-icons/ai";
 import { FaHome, FaBuilding, FaBed } from "react-icons/fa";
 import { FaLocationDot, FaShower } from "react-icons/fa6";
@@ -23,4 +23,5 @@ export {
   FaHome,
   FaBuilding,
   FaBed,
+  FaUsers,
 };
