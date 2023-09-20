@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({
@@ -16,8 +18,17 @@ const LoginForm = () => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Login data:", formData);
+    try {
+      e.preventDefault();
+      // Simulated login success, make a log in logic
+      const loginSuccess = true;
+
+      if (loginSuccess) {
+        toast.success("Login successful!", "success");
+      }
+    } catch (error) {
+      toast.error("Login failed. Please check your credentials.", "error");
+    }
   };
 
   return (
@@ -28,9 +39,7 @@ const LoginForm = () => {
       >
         <button
           className="absolute top-2 right-4 h-10 w-6 text-gray-800"
-          onClick={() => {
-            // Handle close button click here
-          }}
+          onClick={() => {}}
         >
           <AiOutlineClose />
         </button>
@@ -42,7 +51,7 @@ const LoginForm = () => {
             <p className="inline text-[#92c872]"> tirahunt.</p>
           </div>
           <label
-            className=" text-gray-700 text-sm font-bold mt-4"
+            className="text-gray-700 text-sm font-bold mt-4"
             htmlFor="email"
           ></label>
           <input
@@ -87,6 +96,7 @@ const LoginForm = () => {
           </div>
         </div>
       </form>
+      <ToastContainer />
     </div>
   );
 };
