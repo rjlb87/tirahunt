@@ -19,8 +19,8 @@ function AdminDashboard() {
     setCurrentPage(selected);
   };
 
-  const startIndex = currentPage * itemsPerPage + 1;
-  const endIndex = Math.min(startIndex + itemsPerPage - 1, users.length);
+  const startIndex = currentPage * itemsPerPage;
+  const endIndex = Math.min(startIndex + itemsPerPage, users.length);
 
   const handleSearchInputChange = (e) => {
     setSearchTerm(e.target.value);
@@ -36,7 +36,7 @@ function AdminDashboard() {
     return usernameMatch || emailMatch;
   });
 
-  const currentData = filteredUsers.slice(startIndex - 1, endIndex);
+  const currentData = filteredUsers.slice(startIndex, endIndex);
 
   const handleDeleteUsers = async (id) => {
     try {
@@ -84,7 +84,7 @@ function AdminDashboard() {
           <div className="space-x-6">
             <p className="text-lg text-gray-800 font-bold">
               Total Users:{" "}
-              <span className={`text-gray-600 font-bold text-lg`}>
+              <span className={`text-white-600 font-bold text-lg`}>
                 {totalUsers}
               </span>{" "}
               | Total Renters{" "}
@@ -117,10 +117,7 @@ function AdminDashboard() {
               <th className="px-6 py-3 text-xs font-semibold uppercase">
                 Email
               </th>
-              <th
-                colSpan={2}
-                className="px-6 py-3 text-xs font-semibold uppercase"
-              >
+              <th className="px-6 py-3 text-xs font-semibold uppercase">
                 Actions
               </th>
             </tr>
@@ -131,21 +128,19 @@ function AdminDashboard() {
                 key={user.id}
                 className="hover:bg-gray-100 transition-colors text-sm border-gray-300"
               >
-                <td className="border-gray-500 px-6 py-3 bg-gray-100 text-center text-gray-800 font-bold">
-                  {startIndex + index}
+                <td className="border-gray-500 text-center text-gray-800 font-bold bg-[#e5fdd8]">
+                  {startIndex + index + 1}
                 </td>
-                <td className="border-gray-500 px-6 py-3 bg-gray-100 text-center text-gray-800 font-semibold">
+                <td className="border-gray-500 px-2 sm:px-6 py-3 text-center text-gray-800 font-semibold bg-[#e5fdd8]">
                   {user.username}
                 </td>
-                <td className="border-gray-500 px-6 py-3 bg-gray-100 text-center text-gray-800 font-semibold">
+                <td className="border-gray-500 px-2 sm:px-6 py-3 text-center text-gray-800 font-semibold bg-[#e5fdd8]">
                   {user.email}
                 </td>
-                <td className="border-gray-500 bg-gray-100">
+                <td className="flex justify-center items-center bg-[#e5fdd8] px-4 space-x-4 pt-4 pb-4">
                   <Edit users={user} />
-                </td>
-                <td className="border-gray-500 bg-gray-100">
                   <button
-                    className="group flex justify-center py-2 px-4 bg-gray-800 hover:bg-red-600 text-white font-bold rounded"
+                    className="group flex justify-center p-2 px-4 bg-white hover:bg-red-500 text-gray-800 font-bold rounded"
                     onClick={() => handleDeleteUsers(user.id)}
                   >
                     Delete

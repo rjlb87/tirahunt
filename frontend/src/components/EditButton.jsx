@@ -36,9 +36,9 @@ const EditDashboard = ({ users }) => {
 
   return (
     <div>
-      <div className="py-4 mx-10 h-auto">
+      <div className="">
         <button
-          className="bg-gray-800 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded"
+          className="bg-white hover:bg-blue-500 text-gray-800 font-bold py-2 px-6 rounded"
           onClick={toggleModal}
         >
           Edit
