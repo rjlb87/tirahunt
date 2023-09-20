@@ -60,7 +60,7 @@ function AdminDashboard() {
       <table className=" mx-auto border-collapse ">
         <thead>
           <tr className="bg-[#92c872]">
-            <th className=" px-6  text-xs font-semibold text-white ">#</th>
+            <th className=" px-6  text-xs font-semibold text-white ">NO.</th>
             <th className=" px-6  text-xs font-semibold uppercase text-white ">
               Username
             </th>
@@ -97,7 +97,7 @@ function AdminDashboard() {
               <td className="border-gray-500  bg-gray-100">
                 <td className="flex justify-center group py-4 px-6">
                   <button
-                    className=" bg-gray-800 hover:bg-red-600 text-white font-bold py-2 px-4 "
+                    className=" bg-gray-800 hover:bg-red-600 text-white font-bold py-2 px-4 rounded "
                     onClick={() => handleDeleteUsers(users.id)}
                   >
                     Delete

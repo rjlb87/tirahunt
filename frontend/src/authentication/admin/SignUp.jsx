@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { createUsers } from "../../services/UsersService";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -17,12 +19,15 @@ const Signup = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      createUsers(formData);
+      await createUsers(formData);
       setFormData({ username: "", email: "", password: "" });
+
+      toast.success("Signup successful!", "success");
     } catch (error) {
+      toast.error("Signup failed. Please try again.", "error");
       console.error(error.message);
     }
   };
@@ -108,6 +113,7 @@ const Signup = () => {
           </div>
         </div>
       </form>
+      <ToastContainer />
     </div>
   );
 };
