@@ -11,8 +11,10 @@ CREATE TABLE images (
   image_url VARCHAR(255) NOT NULL,
   mimetype VARCHAR(255) NOT NULL,
   originalname VARCHAR(255) NOT NULL,
-  size VARCHAR(255) NOT NULL,
+  size VARCHAR(255) NOT NULL
 );
+
+CREATE TYPE property_type AS ENUM ('House', 'Apartment', 'Bed Space');
 
 
 CREATE TABLE property_listings (
@@ -25,9 +27,6 @@ CREATE TABLE property_listings (
     bathrooms INT NOT NULL,
     living_rooms INT NOT NULL,
     rating INT CHECK (rating >= 1 AND rating <= 5),
-    property_type ENUM ('House', 'Apartment', 'Bed Space') NOT NULL
+    property_type property_type NOT NULL,
     image_id INT REFERENCES images(image_id) NOT NULL
 );
-
-
-
