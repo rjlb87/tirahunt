@@ -82,7 +82,7 @@ function AdminDashboard() {
         </h1>
       </div>
 
-      <div className="bg-[#92c872]  p-4 rounded-tl rounded-tr border mx-10">
+      <div className="bg-[#92c872]  p-4 rounded-tl-lg rounded-tr-lg border mx-10">
         <div className="flex justify-between items-center">
           <div className="space-x-10">
             <p className="text-md text-gray-100 font-bold inline-flex">
@@ -155,7 +155,9 @@ function AdminDashboard() {
           </tbody>
         </table>
       </div>
-
+      <div className="px-10 bg-[#92c872] mx-10 rounded-bl-lg rounded-br-lg text-[#92c872] ">
+        this is a line
+      </div>
       <div className="flex justify-center mt-4">
         <nav className="bg-white rounded-lg shadow-md">
           <ReactPaginate
