@@ -12,7 +12,6 @@ CREATE TABLE images (
   mimetype VARCHAR(255) NOT NULL,
   originalname VARCHAR(255) NOT NULL,
   size VARCHAR(255) NOT NULL,
-  post_id VARCHAR(255) NOT NULL
 );
 
 

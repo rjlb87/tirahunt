@@ -98,16 +98,9 @@ app.delete("/api/v1/users/:id", (req, res) => {
 
 
 // login
+
 app.post('/api/v1/login', (req, res) => {
-  userController.userLogin(req.body)
-  .then((data) => {
-    if(data.success) {
-      res.status(200).json(data)
-    } else {
-      res.status(401).json(data)
-    }
-  })
-  .catch((error) => res.status(500).json({ error: "Internal Server Error" }))
+  userController.userLogin(req.body).then((data) => res.json(data))
 })
 
 // property listings
@@ -118,14 +111,26 @@ app.get("/api/v1/listings", (req, res) => {
     .catch((error) => res.status(500).json({ error: "Internal Server Error" }));
 });
 
-app.post("/api/vi/listings", (req, res) => {
-  propertyListing
-    .createProperty(req.body.property_listings)
-    .then((data) => res.status(201).json(data))
-    .catch((error) => res.status(400).json({ error: "Bad Request" }));
+app.post("/api/v1/listings", async (req, res) => {
+  try {
+    console.log("property:", req.body);
+
+    // Check if the request body contains the expected property_listings data
+    const propertyData = req.body.property_listings;
+    if (!propertyData) {
+      return res.status(400).json({ error: "Bad Request - Missing property_listings data" });
+    }
+
+    const newProperty = await propertyListing.createProperty(propertyData);
+    res.status(201).json(newProperty);
+  } catch (error) {
+    console.error("Error creating property:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 });
 
-app.put("/api/vi/listings", (req, res) => {
+
+app.put("/api/v1/listings", (req, res) => {
   propertyListing
     .updateProperty(req.body.property_listings)
     .then((data) => res.status(200).json(data))
@@ -133,7 +138,7 @@ app.put("/api/vi/listings", (req, res) => {
 });
 
 
-app.delete("/api/vi/listings/:id", (req, res) => {
+app.delete("/api/v1/listings/:id", (req, res) => {
   propertyListing
     .deleteProperty(req.params.id)
     .then((data) => {
