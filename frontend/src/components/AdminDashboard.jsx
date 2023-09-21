@@ -78,11 +78,11 @@ function AdminDashboard() {
     <div className="min-h-screen bg-gray-200 px-20 py-20">
       <div className="text-start my-10 text-2xl text-gray-800 px-10">
         <h1 className="font-bold tracking-wider inline-flex items-center">
-          <MdDashboard size={40} className="mr-2" /> Welcome, user!
+          <MdDashboard size={40} className="mr-2" /> Welcome, admin!
         </h1>
       </div>
 
-      <div className="bg-[#92c872]  p-4 rounded-tl rounded-tr border mx-10">
+      <div className="bg-[#92c872]  p-4 rounded-tl-lg rounded-tr-lg border mx-10">
         <div className="flex justify-between items-center">
           <div className="space-x-10">
             <p className="text-md text-gray-100 font-bold inline-flex">
@@ -98,7 +98,7 @@ function AdminDashboard() {
             </p>
           </div>
 
-          <div className="flex justify-end w-1/2 md:w-1/4 lg:w-1/4 text-sm px-10">
+          <div className="flex justify-end w-1/2 md:w-1/4 lg:w-1/4 text-sm px-10 ml-4">
             <input
               type="text"
               placeholder="Search username or email"
@@ -155,7 +155,9 @@ function AdminDashboard() {
           </tbody>
         </table>
       </div>
-
+      <div className="px-10 bg-[#92c872] mx-10 rounded-bl-lg rounded-br-lg text-[#92c872] ">
+        this is a line
+      </div>
       <div className="flex justify-center mt-4">
         <nav className="bg-white rounded-lg shadow-md">
           <ReactPaginate
