@@ -78,7 +78,7 @@ function AdminDashboard() {
     <div className="min-h-screen bg-gray-200 px-20 py-20">
       <div className="text-start my-10 text-2xl text-gray-800 px-10">
         <h1 className="font-bold tracking-wider inline-flex items-center">
-          <MdDashboard size={40} className="mr-2" /> Welcome, user!
+          <MdDashboard size={40} className="mr-2" /> Welcome, admin!
         </h1>
       </div>
 
@@ -98,7 +98,7 @@ function AdminDashboard() {
             </p>
           </div>
 
-          <div className="flex justify-end w-1/2 md:w-1/4 lg:w-1/4 text-sm px-10">
+          <div className="flex justify-end w-1/2 md:w-1/4 lg:w-1/4 text-sm px-10 ml-4">
             <input
               type="text"
               placeholder="Search username or email"
