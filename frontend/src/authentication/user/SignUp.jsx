@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { createUsers } from "../../services/UsersService";
+import { useNavigate } from "react-router-dom"
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -10,6 +11,8 @@ const Signup = () => {
     email: "",
     password: "",
   });
+  const navigate = useNavigate()
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,6 +29,7 @@ const Signup = () => {
       setFormData({ username: "", email: "", password: "" });
 
       toast.success("Signup successful!", "success");
+      navigate('/signin')
     } catch (error) {
       toast.error("Signup failed. Please try again.", "error");
       console.error(error.message);
