@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { Link } from "react-scroll";
-import { FaSearch, FaUserCircle } from "react-icons/fa";
+import { FaSearch } from "react-icons/fa";
 import { navlink } from "../utils/navlinks";
+import { useNavigate } from "react-router-dom";
 
 const NavBar = () => {
   const [nav, setNav] = useState(false);
   const [alert, setShowAlert] = useState(false);
   const [isDropdownOpen, setisDropdownopen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleDropdown = () => {
     setisDropdownopen(!isDropdownOpen);
@@ -137,8 +139,11 @@ const NavBar = () => {
             {/* Dropdown */}
             {isDropdownOpen && (
               <div className="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg pt-2 pb-2 text-sm">
-                <ul>
-                  <li className="py-2 px-4 hover:bg-gray-100 cursor-pointer font-semibold">
+                <ul className="cursor-pointer">
+                  <li
+                    onClick={() => navigate("/signup")}
+                    className="py-2 px-4 hover:bg-gray-100 cursor-pointer font-semibold"
+                  >
                     Sign up
                   </li>
                   <li className="py-2 px-4 hover:bg-gray-100 cursor-pointer">
@@ -150,6 +155,7 @@ const NavBar = () => {
                 </ul>
               </div>
             )}
+
             {isDropdownOpen && (
               <div
                 className="fixed inset-0 h-full w-full z-10"

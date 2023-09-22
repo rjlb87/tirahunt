@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
+import { userLogIn } from "../../services/LogInServices";
+import { useNavigate } from "react-router-dom"
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -8,6 +10,7 @@ const LoginForm = () => {
     email: "",
     password: "",
   });
+  const navigate = useNavigate()
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -18,16 +21,29 @@ const LoginForm = () => {
   };
 
   const handleSubmit = (e) => {
+    e.preventDefault();
     try {
-      e.preventDefault();
-      // Simulated login success, make a log in logic
-      const loginSuccess = true;
+      userLogIn(formData).then((res) => {
+        if (JSON.stringify(res) !== "{}" && res !== undefined) {
+          console.log(res);
+          sessionStorage.setItem("jwt", res[0].jwt);
+          localStorage.setItem("data", JSON.stringify(res[1]));
+          const data = localStorage.getItem("data");
+          if (data) {
+            console.log("Fetch Data ", JSON.parse(data));
+          }
+          const loginSuccess = true;
 
-      if (loginSuccess) {
-        toast.success("Login successful!", "success");
-      }
+          if (loginSuccess) {
+            toast.success("Login successful!", "success");
+          }
+          navigate('/')
+        } else {
+          toast.error("Incorrect password");
+        }
+      });
     } catch (error) {
-      toast.error("Login failed. Please check your credentials.", "error");
+      console.error("Login failed. Please check your credentials.", error);
     }
   };
 
