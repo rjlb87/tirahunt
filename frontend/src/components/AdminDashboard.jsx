@@ -155,9 +155,7 @@ function AdminDashboard() {
           </tbody>
         </table>
       </div>
-      <div className="px-10 bg-[#92c872] mx-10 rounded-bl-lg rounded-br-lg text-[#92c872] ">
-        this is a line
-      </div>
+      <div className="px-10 h-8 bg-[#92c872] mx-10 rounded-bl-lg rounded-br-lg  "></div>
       <div className="flex justify-center mt-4">
         <nav className="bg-white rounded-lg shadow-md">
           <ReactPaginate
