@@ -9,10 +9,9 @@ export async function getAllProperties() {
   }
 }
 
-export const createProperty = async (property, selectedImage, user_id) => {
+export const createProperty = async (property) => {
+  console.log("here", property)
   try {
-    property.image_id = selectedImage;
-    property.user_id = user_id;
     const response = await fetch("/api/v1/listings", {
       method: "POST",
       headers: {

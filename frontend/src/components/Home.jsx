@@ -38,7 +38,7 @@ function Home() {
   }, []);
 
   return (
-    <div className="h-screen max-w-6xl mx-auto mt-10">
+    <div className="h-screen max-w-6xl mx-auto mt-10 overflow-auto">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-semibold mb-4">Property List</h1>
         <button
