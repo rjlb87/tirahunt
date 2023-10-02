@@ -32,15 +32,26 @@ class PropertyListing {
   }
 
   async createProperty(property) {
-
     try {
-        const newProperty = await this.db.property.create(property);
-        return newProperty;
-      } catch (error) {
-        throw error;
-      }
+       const createProperty = await this.db.property.create({
+          user_id: property.user_id,
+          description: property.description,
+          location: property.location,
+          price: property.price,
+          bedrooms: property.bedrooms,
+          bathrooms: property.bathrooms,
+          living_rooms: property.living_rooms,
+          rating: property.rating,
+          property_type: property.property_type,
+          image_id: property.image_id,
+       })
+      return createProperty;
+    } catch (error) {
+      throw error;
     }
-
+  }
+  
+  
   async updateProperty(property) {
     let data = {}
     try {

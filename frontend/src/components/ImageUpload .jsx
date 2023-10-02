@@ -3,7 +3,7 @@ import { uploadFiles } from "../services/ImageServices";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const ImageUpload = () => {
+const ImageUpload = ({ onImageUploaded }) => {
   const [files, setFiles] = useState([]);
 
   const handleFileChange = (e) => {
@@ -16,16 +16,21 @@ const ImageUpload = () => {
       alert("Please select at least one file to upload.");
       return;
     }
-
     try {
-      await uploadFiles(files);
-      console.log("Uploaded files: ", files);
+      const uploadedImages = await uploadFiles(files);
+      console.log("Uploaded files: ", uploadedImages);
+        if (uploadedImages.length > 0) {
+        const imageId = uploadedImages[0].image_id;
+        onImageUploaded(imageId);
+      } else {
+        onImageUploaded(null); 
+      }
+  
       setFiles([]);
     } catch (error) {
       console.error("Error uploading files", error);
     }
   };
-
   return (
     <div className="max-w-6xl mx-auto">
       <div className="bg-slate-400 flex justify-center items-center">

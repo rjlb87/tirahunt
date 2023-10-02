@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getAllProperties } from "../services/PropertyListings";
 import PropertyForm from "./PropertyForm";
+import { fetchImages } from "../services/ImageServices";
 import {
   FaLocationDot,
   ImPriceTag,
@@ -14,6 +15,7 @@ import {
 function Home() {
   const [properties, setProperties] = useState([]);
   const [showForm, setShowForm] = useState(false);
+  const [images, setImages] = useState([]);
 
   const handleAddClick = () => {
     setShowForm(!showForm);
@@ -27,8 +29,13 @@ function Home() {
   useEffect(() => {
     async function fetchData() {
       try {
+        // const itemStorage = localStorage.getItem('data')
+        // const user = JSON.parse(ite)
         const data = await getAllProperties();
         setProperties(data);
+        const image = await fetchImages();
+        setImages(image);
+        console.log("Fetched Images:", image);
       } catch (error) {
         console.error("Error", error);
       }
@@ -54,11 +61,16 @@ function Home() {
             key={property.property_id}
             className="bg-white p-4 rounded shadow flex flex-col items-start"
           >
-            <img
-              src={"./public/img_1.jpg"}
-              alt="Property"
-              className="w-full h-auto mb-4"
-            />
+            {images &&
+              images.length > 0 &&
+              images.slice(0, 1).map((image, index) => (
+                <img
+                  key={index}
+                  src={`images/${image.image_url}`} // Use the relative URL
+                  alt={`Image ${index + 1}`}
+                  className="w-20 h-20 mr-2 bg-cover rounded-md"
+                />
+              ))}
             <h2 className="text-xl font-semibold">{property.description}</h2>
             <p className="text-gray-600 flex items-center">
               <FaLocationDot className="mr-2" />

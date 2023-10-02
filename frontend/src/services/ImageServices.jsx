@@ -1,31 +1,60 @@
 import { toast } from 'react-toastify';
 
-export const uploadFiles = async ( files) => {
+export const uploadFiles = async (files) => {
+  console.log("here",files)
   try {
     if (files.length > 4) {
-      toast.error('Maximum upload of 4 files exceeded');
+      toast.error("Maximum upload of 4 files exceeded");
       return;
     }
 
     const formData = new FormData();
     files.forEach((file) => {
-      formData.append('files', file);
+      formData.append("files", file);
     });
 
-    const response = await fetch('/api/v1/upload', {
-      method: 'POST',
+    const response = await fetch("/api/v1/upload", {
+      method: "POST",
       body: formData,
     });
 
-    if (response.ok) {
-      toast.success('Images uploaded successfully');
+    if (response.status === 200) {
+      toast.success("Images uploaded successfully");
       return response.json();
     } else {
-      toast.error('Error uploading images');
+      // Handle non-200 status codes
+      const errorMessage = await response.text();
+      toast.error(`Error uploading images: ${errorMessage}`);
     }
   } catch (error) {
-    console.error('Error uploading images', error);
-    toast.error('Error uploading images');
+    console.error("Error uploading images", error);
+    toast.error("Error uploading images");
     throw error;
   }
 };
+
+export const fetchImagesByUser = async (image_id) => {
+  try {
+    const response = await fetch(`/api/v1/images/${image_id}`); // Include the full URL
+    const data = await response.json();
+    console.log('Fetched Images:', data);
+    return data;
+  } catch (error) {
+    console.error('Error fetching images:', error);
+    throw error;
+  }
+};
+
+export const fetchImages = async () => {
+  try {
+    const response = await fetch('/api/v1/images'); // Include the full URL
+    const data = await response.json();
+    console.log('Fetched Images:', data);
+    return data;
+  } catch (error) {
+    console.error('Error fetching images:', error);
+    throw error;
+  }
+};
+
+
