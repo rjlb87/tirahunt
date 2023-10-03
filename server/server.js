@@ -45,16 +45,17 @@ app.get("/api/v1/images", (req, res) => {
     .then((data) => res.status(200).json(data))
     .catch((error) => res.status(500).json({ error: "Internal Server Error" }));
 });
-app.get("/api/v1/images/:image_id", (req, res) => {
-  imagesController
-    .getImagesByUser(req.params.image_id)
-    .then((data) => res.status(200).json(data))
-    .catch((error) => res.status(500).json({ error: "Internal Server Error" }));
-});
+// app.get("/api/v1/images/:image_id", (req, res) => {
+//   imagesController
+//     .getImagesByUser(req.params.image_id)
+//     .then((data) => res.status(200).json(data))
+//     .catch((error) => res.status(500).json({ error: "Internal Server Error" }));
+// });
 
 
 // Serve the images from the specified directory
 app.post("/api/v1/upload", upload.array("files", 4), async (req, res) => {
+  console.log("eto yung image body", req.body)
   imagesController
     .upload(req.body, req.files)
     .then((data) => res.json(data))
@@ -62,6 +63,26 @@ app.post("/api/v1/upload", upload.array("files", 4), async (req, res) => {
       (error) => res.status(error)
       // .catch((error) => res.status(500).json({ error: "Internal Server Error" })));
     );
+});
+
+app.put("/api/v1/images", (req, res) => {
+  imagesController
+    .updateImages(req.body.images)
+    .then((data) => res.status(200).json(data))
+    .catch((error) => res.status(500).json({ error: "Internal Server Error" }));
+});
+
+app.delete("/api/v1/images/:image_id", (req, res) => {
+  imagesController
+    .deleteImages(req.params.image_id)
+    .then((data) => {
+      if (data) {
+        res.status(204).end();
+      } else {
+        res.status(404).end("No data available");
+      }
+    })
+    .catch((error) => res.status(500).json({ error: "Internal Server Error" }));
 });
 
 // users
@@ -117,26 +138,6 @@ app.post('/api/v1/listings', (req, res) => {
   console.log("eto yun", req.body)
   propertyListing.createProperty(req.body.property_listings).then((data) => res.json(data))
 })
-
-// app.post("/api/v1/listings", async (req, res) => {
-//   try {
-//     console.log("property:", req.body);
-
-//     // Check if the request body contains the expected property_listings data
-//     const propertyData = req.body.property_listings;
-//     if (!propertyData) {
-//       return res
-//         .status(400)
-//         .json({ error: "Bad Request - Missing property_listings data" });
-//     }
-
-//     const newProperty = await propertyListing.createProperty(propertyData);
-//     res.status(201).json(newProperty);
-//   } catch (error) {
-//     console.error("Error creating property:", error);
-//     res.status(500).json({ error: "Internal Server Error" });
-//   }
-// });
 
 app.put("/api/v1/listings", (req, res) => {
   propertyListing

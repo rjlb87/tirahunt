@@ -1,0 +1,413 @@
+import React, { useEffect, useState } from "react";
+import { getAllProperties } from "../services/PropertyListings";
+import PropertyForm from "./PropertyForm";
+import { fetchImages } from "../services/ImageServices";
+// import {
+//   FaLocationDot,
+//   ImPriceTag,
+//   FaBed,
+//   FaShower,
+//   BsFillPersonFill,
+//   BsFillHouseDoorFill,
+//   MdLiving,
+// } from "../icons/icons";
+
+function Home() {
+  const [properties, setProperties] = useState([]);
+  const [showForm, setShowForm] = useState(false);
+  const [imageData, setImageData] = useState([]);
+
+  const handleAddClick = () => {
+    setShowForm(!showForm);
+  };
+
+  const formatPrice = (price) => {
+    const formattedPrice = price.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
+    return `₱${formattedPrice}`;
+  };
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        // const itemStorage = localStorage.getItem('data')
+        // const user = JSON.parse(ite)
+        const data = await getAllProperties();
+        setProperties(data);
+        const image = await fetchImages();
+        setImageData(image);
+      } catch (error) {
+        console.error("Error", error);
+      }
+    }
+
+    fetchData();
+  }, []);
+
+  return (
+    <div className="h-screen max-w-6xl mx-auto mt-10 overflow-auto">
+      <div className="flex justify-between items-center">
+        <h1 className="text-3xl font-semibold mb-4">Property List</h1>
+        <button
+          className="bg-[#92c872] rounded-lg text-white w-[15%]"
+          onClick={handleAddClick}
+        >
+          Add
+        </button>
+      </div>
+      {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {properties.map((property) => (
+          <div
+            key={property.property_id}
+            className="bg-white p-4 rounded shadow flex flex-col items-start"
+          >
+            {images[property.property_id] &&
+              images[property.property_id].length > 0 && (
+                <div className="flex">
+                  {images[property.property_id]
+                    .slice(0, 2)
+                    .map((image, index) => (
+                      <img
+                        key={index}
+                        src={`images/${image.image_url}`} // Use the relative URL
+                        alt={`Image ${index + 1}`}
+                        className="w-20 h-20 mr-2 bg-cover rounded-md"
+                      />
+                    ))}
+                </div>
+              )}
+            <h2 className="text-xl font-semibold">{property.description}</h2>
+            <p className="text-gray-600 flex items-center">
+              <FaLocationDot className="mr-2" />
+              {property.location}
+            </p>
+            <p className="text-gray-600 flex items-center">
+              <ImPriceTag className="mr-2" />
+              {formatPrice(parseFloat(property.price))}
+            </p>
+            <p className="text-gray-600 flex items-center">
+              <FaBed className="mr-2" />
+              {property.bedrooms}
+            </p>
+            <p className="text-gray-600 flex items-center">
+              <FaShower className="mr-2" />
+              {property.bathrooms}
+            </p>
+            <p className="text-gray-600 flex items-center">
+              <MdLiving className="mr-2" />
+              {property.living_rooms}
+            </p>
+            <p className="text-gray-600">Rating: {property.rating}</p>
+            <p className="text-gray-600 flex items-center">
+              <BsFillHouseDoorFill className="mr-2" />
+              {property.property_type}
+            </p>
+            <p className="text-gray-600 flex items-center">
+              <BsFillPersonFill className="mr-2" />
+              {property.users.username}
+            </p>
+          </div>
+        ))}
+      </div> */}
+  <div className="container mx-auto mt-8">
+    {imageData.map((image) => (
+      <div key={image.image_id} className="mb-4">
+        <img
+          src={`path-to-your-backend/${image.image_url}`}
+          alt={image.originalname}
+          className="max-w-full"
+        />
+        <h2 className="text-lg font-semibold">{image.originalname}</h2>
+        <p>Property ID: {image.property_id}</p>
+        <p>Description: {image.property_listings.description}</p>
+        <p>Location: {image.property_listings.location}</p>
+        <p>Price: ${image.property_listings.price}</p>
+        <p>Bedrooms: {image.property_listings.bedrooms}</p>
+        <p>Bathrooms: {image.property_listings.bathrooms}</p>
+        <p>Living Rooms: {image.property_listings.living_rooms}</p>
+        <p>Property Type: {image.property_listings.property_type}</p>
+      </div>
+    ))}
+  </div>
+);
+
+      {showForm && <PropertyForm />}
+    </div>
+  );
+}
+
+export default Home;
+----------------------------------------
+
+
+import React, { useState, useEffect } from "react";
+import { createProperty } from "../services/PropertyListings";
+import { uploadFiles } from "../services/ImageServices"; // Import necessary services
+import { AiOutlineClose } from "../icons/icons";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import ImageUpload from "./ImageUploader";
+
+const PropertyForm = () => {
+  const userID = localStorage.getItem("data");
+  const [property, setProperty] = useState({
+    user_id: userID ? JSON.parse(userID).id : "",
+    description: "",
+    location: "",
+    price: "",
+    bedrooms: "",
+    bathrooms: "",
+    living_rooms: "",
+    property_type: "",
+  });
+
+  const [showForm, setShowForm] = useState(false);
+  const [images, setImages] = useState([]);
+
+  const handleShow = () => {
+    setShowForm(!showForm);
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setProperty({ ...property, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      // Step 1: Create the property listing
+      const response = await createProperty(property);
+      console.log("Property created:", response);
+      toast.success("Property created");
+
+      // Step 2: Obtain the property_id from the response
+      const createdPropertyId = response.property_id;
+
+      // Set the property_id in the state
+      setProperty({
+        ...property,
+        property_id: createdPropertyId,
+      });
+
+      // Save the property data in local storage
+      localStorage.setItem("propertyData", JSON.stringify(property));
+
+      // Step 3: Upload images associated with the created property
+      const uploadedImages = await uploadFiles(images, createdPropertyId);
+
+      // Update the state with the uploaded images
+      setImages(uploadedImages);
+
+      // Reset the form fields
+      setProperty({
+        user_id: userID ? JSON.parse(userID).id : "",
+        description: "",
+        location: "",
+        price: "",
+        bedrooms: "",
+        bathrooms: "",
+        living_rooms: "",
+        property_type: "",
+      });
+    } catch (error) {
+      toast.error("Invalid Inputs");
+      console.error("Error creating property:", error);
+    }
+  };
+
+  // Function to handle file upload
+  const handleFileChange = (e) => {
+    const selectedFiles = e.target.files;
+    setImages([...selectedFiles]);
+  };
+
+  return (
+    <div className="max-w-6xl mx-auto bg-black rounded-lg shadow-lg">
+      <ImageUpload onFileChange={handleFileChange} />
+      {/* Display images associated with the property */}
+      {images.length > 0 &&
+        images.map((image, index) => (
+          <img
+            key={index}
+            src={URL.createObjectURL(image)}
+            alt={`Image ${index}`}
+          />
+        ))}
+
+      {!showForm && (
+        <div className="fixed inset-0 z-50 flex flex-col justify-center items-center overflow-auto bg-opacity-75">
+          <div className="bg-gray-500 px-6 max-w-lg py-4 rounded-lg">
+            <div className="flex justify-between items-center">
+              <h2 className="text-2xl font-semibold mb-4">
+                Add a New Property
+              </h2>
+              <button onClick={handleShow}>
+                <AiOutlineClose />
+              </button>
+            </div>
+            <form onSubmit={handleSubmit}>
+              <div className="grid grid-cols-2 gap-4 ">
+                <div className="mb-4">
+                  <label
+                    htmlFor="user_id"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    user_id:
+                  </label>
+                  <input
+                    type="text"
+                    name="user_id"
+                    id="user_id"
+                    value={property.user_id}
+                    onChange={handleInputChange}
+                    required
+                    className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:ring focus:ring-blue-200 focus:outline-none"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label
+                    htmlFor="description"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Description:
+                  </label>
+                  <input
+                    type="text"
+                    name="description"
+                    id="description"
+                    value={property.description}
+                    onChange={handleInputChange}
+                    required
+                    className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:ring focus:ring-blue-200 focus:outline-none"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label
+                    htmlFor="location"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Location:
+                  </label>
+                  <input
+                    type="text"
+                    name="location"
+                    id="location"
+                    value={property.location}
+                    onChange={handleInputChange}
+                    required
+                    className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:ring focus:ring-blue-200 focus:outline-none"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label
+                    htmlFor="price"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Price:
+                  </label>
+                  <input
+                    type="text"
+                    name="price"
+                    id="price"
+                    value={property.price}
+                    onChange={handleInputChange}
+                    required
+                    pattern="[0-9,]*"
+                    title="Please enter only numeric characters and commas."
+                    className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:ring focus:ring-blue-200 focus:outline-none"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label
+                    htmlFor="bedrooms"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Bedrooms:
+                  </label>
+                  <input
+                    type="number"
+                    name="bedrooms"
+                    id="bedrooms"
+                    value={property.bedrooms}
+                    onChange={handleInputChange}
+                    required
+                    className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:ring focus:ring-blue-200 focus:outline-none"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label
+                    htmlFor="bathrooms"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Bathrooms:
+                  </label>
+                  <input
+                    type="number"
+                    name="bathrooms"
+                    id="bathrooms"
+                    value={property.bathrooms}
+                    onChange={handleInputChange}
+                    required
+                    className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:ring focus:ring-blue-200 focus:outline-none"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label
+                    htmlFor="living_rooms"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Living Rooms:
+                  </label>
+                  <input
+                    type="number"
+                    name="living_rooms"
+                    id="living_rooms"
+                    value={property.living_rooms}
+                    onChange={handleInputChange}
+                    required
+                    className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:ring focus:ring-blue-200 focus:outline-none"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label
+                    htmlFor="property_type"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Property Type:
+                  </label>
+                  <select
+                    name="property_type"
+                    id="property_type"
+                    value={property.property_type}
+                    onChange={handleInputChange}
+                    required
+                    className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:ring focus:ring-blue-200 focus:outline-none"
+                  >
+                    <option value="">Select Property Type</option>
+                    <option value="House">House</option>
+                    <option value="Apartment">Apartment</option>
+                    <option value="Bed Space">Bed Space</option>
+                  </select>
+                </div>
+              </div>
+              {/* <ImageUpload /> */}
+
+              <div className="text-center">
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-200"
+                >
+                  Submit
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+      <ToastContainer />
+    </div>
+  );
+};
+
+export default PropertyForm;

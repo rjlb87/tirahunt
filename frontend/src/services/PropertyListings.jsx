@@ -23,6 +23,5 @@ export const createProperty = async (property_listings) => {
     return response.json();
   } catch (error) {
     console.error("Error creating property", error);
-    throw error;
   }
 };

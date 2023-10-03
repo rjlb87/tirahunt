@@ -1,21 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { getAllProperties } from "../services/PropertyListings";
 import PropertyForm from "./PropertyForm";
 import { fetchImages } from "../services/ImageServices";
-import {
-  FaLocationDot,
-  ImPriceTag,
-  FaBed,
-  FaShower,
-  BsFillPersonFill,
-  BsFillHouseDoorFill,
-  MdLiving,
-} from "../icons/icons";
 
 function Home() {
-  const [properties, setProperties] = useState([]);
   const [showForm, setShowForm] = useState(false);
-  const [images, setImages] = useState([]);
+  const [imageData, setImageData] = useState([]);
 
   const handleAddClick = () => {
     setShowForm(!showForm);
@@ -29,13 +18,8 @@ function Home() {
   useEffect(() => {
     async function fetchData() {
       try {
-        // const itemStorage = localStorage.getItem('data')
-        // const user = JSON.parse(ite)
-        const data = await getAllProperties();
-        setProperties(data);
         const image = await fetchImages();
-        setImages(image);
-        console.log("Fetched Images:", image);
+        setImageData(image);
       } catch (error) {
         console.error("Error", error);
       }
@@ -45,65 +29,70 @@ function Home() {
   }, []);
 
   return (
-    <div className="h-screen max-w-6xl mx-auto mt-10 overflow-auto">
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-semibold mb-4">Property List</h1>
-        <button
-          className="bg-[#92c872] rounded-lg text-white w-[15%]"
-          onClick={handleAddClick}
-        >
-          Add
-        </button>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {properties.map((property) => (
-          <div
-            key={property.property_id}
-            className="bg-white p-4 rounded shadow flex flex-col items-start"
+    <div className="bg-gray-100 min-h-screen">
+      <header className="bg-white p-4">
+        <div className="max-w-6xl mx-auto flex justify-between items-center">
+          <h1 className="text-3xl font-semibold">Property List</h1>
+          <button
+            className="bg-[#FF385C] text-white rounded-lg py-2 px-6"
+            onClick={handleAddClick}
           >
-            {images &&
-              images.length > 0 &&
-              images.slice(0, 1).map((image, index) => (
-                <img
-                  key={index}
-                  src={`images/${image.image_url}`} // Use the relative URL
-                  alt={`Image ${index + 1}`}
-                  className="w-20 h-20 mr-2 bg-cover rounded-md"
-                />
-              ))}
-            <h2 className="text-xl font-semibold">{property.description}</h2>
-            <p className="text-gray-600 flex items-center">
-              <FaLocationDot className="mr-2" />
-              {property.location}
-            </p>
-            <p className="text-gray-600 flex items-center">
-              <ImPriceTag className="mr-2" />
-              {formatPrice(parseFloat(property.price))}
-            </p>
-            <p className="text-gray-600 flex items-center">
-              <FaBed className="mr-2" />
-              {property.bedrooms}
-            </p>
-            <p className="text-gray-600 flex items-center">
-              <FaShower className="mr-2" />
-              {property.bathrooms}
-            </p>
-            <p className="text-gray-600 flex items-center">
-              <MdLiving className="mr-2" />
-              {property.living_rooms}
-            </p>
-            <p className="text-gray-600">Rating: {property.rating}</p>
-            <p className="text-gray-600 flex items-center">
-              <BsFillHouseDoorFill className="mr-2" />
-              {property.property_type}
-            </p>
-            <p className="text-gray-600 flex items-center">
-              <BsFillPersonFill className="mr-2" />
-              {property.users.username}
-            </p>
+            Add
+          </button>
+        </div>
+      </header>
+
+      <div className="max-w-6xl mx-auto mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
+        {imageData.map((image) => (
+          <div
+            key={image.image_id}
+            className="bg-white rounded-lg shadow-lg overflow-hidden"
+          >
+            <img
+              src={`images/${image.image_url}`}
+              alt={image.originalname}
+              className="w-full h-48 object-cover"
+            />
+            <div className="p-4">
+              {image.property_listings?.users?.username && (
+                <p className="text-gray-500 text-sm">
+                  Hosted by: {image.property_listings.users.username}
+                </p>
+              )}
+              <p className="text-gray-500 text-sm">
+                Location: {image.property_listings?.location}
+              </p>
+              {/* Convert price to a number and then format it */}
+              {typeof image.property?.price === "string" && (
+                <p className="text-gray-500 text-sm">
+                  Price: {formatPrice(parseFloat(image.property.price))}
+                </p>
+              )}
+              <p className="text-gray-500 text-sm">
+                Description: {image.property_listings?.description}
+              </p>
+              <p className="text-gray-500 text-sm">
+                Bedroom: {image.property_listings?.bedrooms}
+              </p>
+              <p className="text-gray-500 text-sm">
+                Bathroom: {image.property_listings?.bathrooms}
+              </p>
+              <p className="text-gray-500 text-sm">
+                Living Room: {image.property_listings?.living_rooms}
+              </p>
+              <p className="text-gray-500 text-sm">
+                Property Type: {image.property_listings?.property_type}
+              </p>
+              <div className="mt-4">
+                <button className="bg-[#92c872] text-white rounded-lg px-4 py-2">
+                  Book Now
+                </button>
+              </div>
+            </div>
           </div>
         ))}
       </div>
+
       {showForm && <PropertyForm />}
     </div>
   );

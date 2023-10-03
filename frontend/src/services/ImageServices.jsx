@@ -22,7 +22,6 @@ export const uploadFiles = async (files) => {
       toast.success("Images uploaded successfully");
       return response.json();
     } else {
-      // Handle non-200 status codes
       const errorMessage = await response.text();
       toast.error(`Error uploading images: ${errorMessage}`);
     }

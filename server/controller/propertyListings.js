@@ -17,11 +17,6 @@ class PropertyListing {
             as: 'users',
             attributes: ['username']
           },
-          {
-            model: this.db.images,
-            as: 'images',
-            attributes: ['image_url']
-          },
         ],
         }
       );
@@ -41,9 +36,7 @@ class PropertyListing {
           bedrooms: property.bedrooms,
           bathrooms: property.bathrooms,
           living_rooms: property.living_rooms,
-          rating: property.rating,
           property_type: property.property_type,
-          image_id: property.image_id,
        })
       return createProperty;
     } catch (error) {

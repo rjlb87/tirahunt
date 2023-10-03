@@ -9,6 +9,14 @@ module.exports = (sequelize, DataTypes, Model) => {
           autoIncrement: true,
           allowNull: false,
         },
+        property_id: {
+          type: DataTypes.INTEGER,
+          references: {
+            model: 'property_listings',
+            key: 'property_id',
+          },
+          allowNull: true,
+        },
         image_url: {
           type: DataTypes.STRING,
           allowNull: false,
@@ -32,6 +40,11 @@ module.exports = (sequelize, DataTypes, Model) => {
         modelName: "images",
       }
     );
+
+    Images.belongsTo(sequelize.models.property_listings , {
+      foreignKey: "property_id",
+      as: "property_listings",
+    });
   
     return Images;
   };
