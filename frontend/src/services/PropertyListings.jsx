@@ -9,24 +9,19 @@ export async function getAllProperties() {
   }
 }
 
-export const createProperty = async (property) => {
-  console.log("here", property)
+export const createProperty = async (property_listings) => {
+  console.log("here", property_listings);
   try {
     const response = await fetch("/api/v1/listings", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(property),
+      body: JSON.stringify({ property_listings }),
     });
 
-    if (response.ok) {
-      return response.json();
-    } else {
-      throw new Error("Error creating property");
-    }
+    return response.json();
   } catch (error) {
     console.error("Error creating property", error);
-    throw error;
   }
 };

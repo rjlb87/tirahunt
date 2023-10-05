@@ -1,6 +1,6 @@
 export const userLogIn = async (users) => {
   try {
-    const response = await fetch("/api/v1/LogIn", {
+    const response = await fetch("/api/v1/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(users),
