@@ -27,23 +27,28 @@ class PropertyListing {
   }
 
   async createProperty(property) {
-    console.log('eto yun', property)
+    console.log('eto yun', property);
     try {
-       const createProperty = await this.db.property.create({
-          user_id: property.user_id,
-          description: property.description,
-          location: property.location,
-          price: property.price,
-          bedrooms: property.bedrooms,
-          bathrooms: property.bathrooms,
-          living_rooms: property.living_rooms,
-          property_type: property.property_type,
-       })
+      // Convert the price to thousands before creating the property
+      const priceInThousands = property.price * 1000;
+  
+      const createProperty = await this.db.property.create({
+        user_id: property.user_id,
+        description: property.description,
+        location: property.location,
+        price: priceInThousands, // Store the price in thousands
+        bedrooms: property.bedrooms,
+        bathrooms: property.bathrooms,
+        living_rooms: property.living_rooms,
+        property_type: property.property_type,
+      });
+  
       return createProperty;
     } catch (error) {
       throw error;
     }
   }
+  
   
   
   async updateProperty(property) {

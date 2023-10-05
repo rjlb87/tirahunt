@@ -40,12 +40,6 @@ const ImageUpload = ({ handleImageUpload, property }) => {
       <div className="bg-slate-400 flex justify-center items-center">
         <div>
           <div className="flex items-center text-black gap-2">
-            <label
-              htmlFor="image"
-              className="block text-sm font-medium text-white"
-            >
-              Image
-            </label>
             <input
               type="file"
               name="files"

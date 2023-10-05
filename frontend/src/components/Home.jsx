@@ -10,11 +10,6 @@ function Home() {
     setShowForm(!showForm);
   };
 
-  const formatPrice = (price) => {
-    const formattedPrice = price.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
-    return `₱${formattedPrice}`;
-  };
-
   useEffect(() => {
     async function fetchData() {
       try {
@@ -24,8 +19,12 @@ function Home() {
         console.error("Error", error);
       }
     }
-
-    fetchData();
+    const intervalId = setInterval(() => {
+      fetchData();
+    }, 3000);
+    return () => {
+      clearInterval(intervalId);
+    };
   }, []);
 
   return (
@@ -56,18 +55,18 @@ function Home() {
             <div className="p-4">
               {image.property_listings?.users?.username && (
                 <p className="text-gray-500 text-sm">
-                  Hosted by: {image.property_listings.users.username}
+                  Name: {image.property_listings.users.username}
                 </p>
               )}
               <p className="text-gray-500 text-sm">
                 Location: {image.property_listings?.location}
               </p>
-              {/* Convert price to a number and then format it */}
-              {typeof image.property?.price === "string" && (
-                <p className="text-gray-500 text-sm">
-                  Price: {formatPrice(parseFloat(image.property.price))}
-                </p>
-              )}
+              <p className="text-gray-500 text-sm">
+                Price:{" "}
+                {image.property_listings?.price
+                  ? `₱${Number(image.property_listings.price).toLocaleString()}`
+                  : ""}
+              </p>
               <p className="text-gray-500 text-sm">
                 Description: {image.property_listings?.description}
               </p>
