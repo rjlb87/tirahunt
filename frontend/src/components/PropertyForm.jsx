@@ -1,59 +1,75 @@
-  import React, { useState } from "react";
-  import { createProperty } from "../services/PropertyListings";
-  import { AiOutlineClose } from "../icons/icons";
-  import { ToastContainer, toast } from "react-toastify";
-  import "react-toastify/dist/ReactToastify.css";
+import React, { useState } from "react";
+import { createProperty } from "../services/PropertyListings";
+import { AiOutlineClose } from "../icons/icons";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import ImageUpload from "./ImageUploader";
 
-  const PropertyForm = () => {
-    const userID = localStorage.getItem("data");
-    const [property, setProperty] = useState({
-      user_id: userID ? JSON.parse(userID).id : "",
-      description: "",
-      location: "",
-      price: "",
-      bedrooms: "",
-      bathrooms: "",
-      living_rooms: "",
-      property_type: "",
+const PropertyForm = () => {
+  const userID = localStorage.getItem("data");
+  // const propertyId = localStorage.getItem("propertyData");
+
+  const [property, setProperty] = useState({
+
+    user_id: userID ? JSON.parse(userID).id : "",
+    description: "",
+    location: "",
+    price: "",
+    bedrooms: "",
+    bathrooms: "",
+    living_rooms: "",
+    property_type: "",
+    images: [], // Initialize the images array
+  });
+  const [showForm, setShowForm] = useState(false);
+
+  const handleShow = () => {
+    setShowForm(!showForm);
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setProperty({ ...property, [name]: value });
+  };
+
+  const handleImageUpload = (selectedFiles) => {
+    console.log("Selected Files:", selectedFiles);
+    setProperty({
+      ...property,
+      images: selectedFiles,
     });
-    const [showForm, setShowForm] = useState(false)
-    
-    const handleShow = () => {
-      setShowForm(!showForm);
-    };
+  };
+  
 
-    const handleInputChange = (e) => {
-      const { name, value } = e.target;
-      setProperty({ ...property, [name]: value });
-    };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    // PropertyForm.jsx
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-    
-      try {
-        const response = await createProperty(property);
-        console.log("Property created:", response);
-        toast.success("Property created")
+    try {
+      const response = await createProperty(property);
+      console.log("Property created:", response);
+      toast.success("Property created");
 
-        localStorage.setItem("propertyData", JSON.stringify(property));
+      localStorage.setItem("propertyData", JSON.stringify(property));
 
-        setProperty({
-          ...property,
-          description: "",
-          location: "",
-          price: "",
-          bedrooms: "",
-          bathrooms: "",
-          living_rooms: "",
-          property_type: "",
-        });
-      } catch (error) {
-        toast.error("Invalid Inputs")
-        console.error("Error creating property:", error);
-      }
-    };
+      setProperty({
+        ...property,
+        property_id: response.property_id, // Update the id field with the property_id
+        description: "",
+        location: "",
+        price: "",
+        bedrooms: "",
+        bathrooms: "",
+        living_rooms: "",
+        property_type: "",
+        images: [],
+      });
+      
+    } catch (error) {
+      toast.error("Invalid Inputs");
+      console.error("Error creating property:", error);
+    }
+  };
+
     
     return (
       <div className="max-w-6xl mx-auto bg-black rounded-lg shadow-lg">
@@ -213,7 +229,7 @@ import ImageUpload from "./ImageUploader";
                     </select>
                   </div>
                 </div>
-                <ImageUpload />
+                <ImageUpload handleImageUpload={handleImageUpload} property={property} />
 
                 <div className="text-center">
                   <button

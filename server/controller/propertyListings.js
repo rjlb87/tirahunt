@@ -8,7 +8,7 @@ class PropertyListing {
 
   async getAllProperty() {
     try {
-      const user = await this.db.property.findAll(
+      const property = await this.db.property.findAll(
         {
         order: [["property_id", "ASC"]],
         include: [
@@ -20,13 +20,14 @@ class PropertyListing {
         ],
         }
       );
-      return user;
+      return property;
     } catch (error) {
       console.log("Error", error);
     }
   }
 
   async createProperty(property) {
+    console.log('eto yun', property)
     try {
        const createProperty = await this.db.property.create({
           user_id: property.user_id,

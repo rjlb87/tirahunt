@@ -107,28 +107,7 @@ function Home() {
             </p>
           </div>
         ))}
-      </div> */}
-  <div className="container mx-auto mt-8">
-    {imageData.map((image) => (
-      <div key={image.image_id} className="mb-4">
-        <img
-          src={`path-to-your-backend/${image.image_url}`}
-          alt={image.originalname}
-          className="max-w-full"
-        />
-        <h2 className="text-lg font-semibold">{image.originalname}</h2>
-        <p>Property ID: {image.property_id}</p>
-        <p>Description: {image.property_listings.description}</p>
-        <p>Location: {image.property_listings.location}</p>
-        <p>Price: ${image.property_listings.price}</p>
-        <p>Bedrooms: {image.property_listings.bedrooms}</p>
-        <p>Bathrooms: {image.property_listings.bathrooms}</p>
-        <p>Living Rooms: {image.property_listings.living_rooms}</p>
-        <p>Property Type: {image.property_listings.property_type}</p>
-      </div>
-    ))}
-  </div>
-);
+      
 
       {showForm && <PropertyForm />}
     </div>

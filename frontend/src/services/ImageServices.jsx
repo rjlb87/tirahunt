@@ -1,7 +1,7 @@
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
-export const uploadFiles = async (files) => {
-  console.log("here",files)
+export const uploadFiles = async (files, propertyId) => { // Add 'propertyId' parameter
+  console.log("here", files);
   try {
     if (files.length > 4) {
       toast.error("Maximum upload of 4 files exceeded");
@@ -12,6 +12,9 @@ export const uploadFiles = async (files) => {
     files.forEach((file) => {
       formData.append("files", file);
     });
+
+    // Include 'property_id' in the form data to associate the images with the property
+    formData.append("property_id", propertyId);
 
     const response = await fetch("/api/v1/upload", {
       method: "POST",
@@ -32,28 +35,27 @@ export const uploadFiles = async (files) => {
   }
 };
 
+
 export const fetchImagesByUser = async (image_id) => {
   try {
     const response = await fetch(`/api/v1/images/${image_id}`); // Include the full URL
     const data = await response.json();
-    console.log('Fetched Images:', data);
+    console.log("Fetched Images:", data);
     return data;
   } catch (error) {
-    console.error('Error fetching images:', error);
+    console.error("Error fetching images:", error);
     throw error;
   }
 };
 
 export const fetchImages = async () => {
   try {
-    const response = await fetch('/api/v1/images'); // Include the full URL
+    const response = await fetch("/api/v1/images"); // Include the full URL
     const data = await response.json();
-    console.log('Fetched Images:', data);
+    console.log("Fetched Images:", data);
     return data;
   } catch (error) {
-    console.error('Error fetching images:', error);
+    console.error("Error fetching images:", error);
     throw error;
   }
 };
-
-
