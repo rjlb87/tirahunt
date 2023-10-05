@@ -30,7 +30,7 @@ class PropertyListing {
     console.log('eto yun', property);
     try {
       // Convert the price to thousands before creating the property
-      const priceInThousands = property.price * 1000;
+      const priceInThousands = parseFloat(property.price) * 1000;
   
       const createProperty = await this.db.property.create({
         user_id: property.user_id,
