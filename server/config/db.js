@@ -32,11 +32,10 @@ const connect = () => {
     .catch((error) => {
         console.error('Unable to connect to the database: ', error.message)
     })
-
-    db.images = require('../model/images')(sequelize, DataTypes, Model)
     db.users = require('../model/users')(sequelize, DataTypes, Model)
     db.property = require('../model/propertyListings')(sequelize, DataTypes, Model)
-
+    db.images = require('../model/images')(sequelize, DataTypes, Model)
+    
     return db
 }
 module.exports = { connect }

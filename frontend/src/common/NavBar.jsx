@@ -9,6 +9,22 @@ const NavBar = () => {
   const [alert, setShowAlert] = useState(false);
   const [isDropdownOpen, setisDropdownopen] = useState(false);
   const navigate = useNavigate();
+  const [loggedIn, setloggedIn] = useState(false);
+
+  const itemsStorage = localStorage.getItem("data");
+
+  const userData = JSON.parse(itemsStorage);
+  const jwt = sessionStorage.getItem("jwt");
+
+  if (jwt && JSON.stringify(itemsStorage) !== "{}") {
+    if (!loggedIn) {
+      setloggedIn(true);
+    }
+  }
+  let initials =
+    userData !== null
+      ? userData.email[0].toUpperCase()
+      : "";
 
   const toggleDropdown = () => {
     setisDropdownopen(!isDropdownOpen);
@@ -30,7 +46,7 @@ const NavBar = () => {
 
   return (
     <div>
-      {!alert && (
+      {loggedIn && (
         <div
           className="relative z-10 bg-gray-100 border text-gray-800 text-center text- px-4 py-3 rounded"
           role="alert"
@@ -87,6 +103,9 @@ const NavBar = () => {
           <a className="hidden md:inline" href="#">
             Become a host
           </a>
+          <div className="w-10 h-10 text-white rounded-full bg-black font-light flex justify-center items-center">
+              {initials}
+            </div>
 
           <svg
             className="h-6 cursor-pointer"
@@ -96,7 +115,9 @@ const NavBar = () => {
             stroke="currentColor"
             strokeWidth="2"
           >
+       
             <path
+              // data-initials={initials}
               strokeLinecap="round"
               strokeLinejoin="round"
               d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"

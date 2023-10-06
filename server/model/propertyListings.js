@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes, Model) => {
               model: 'users',
               key: 'id',
             },
+            allowNull: false,
           },
           description: {
             type: DataTypes.TEXT,
@@ -39,26 +40,11 @@ module.exports = (sequelize, DataTypes, Model) => {
             type: DataTypes.INTEGER,
             allowNull: false,
           },
-          rating: {
-            type: DataTypes.INTEGER,
-            allowNull: true,
-            validate: {
-              min: 1,
-              max: 5,
-            },
-          },
           property_type: {
             type: DataTypes.ENUM('House', 'Apartment', 'Bed Space'),
             allowNull: false,
           },
-          image_id: {
-            type: DataTypes.INTEGER,
-            references: {
-              model: 'images',
-              key: 'image_id',
-            },
-            allowNull: false,
-          },
+          
         },
       {
         sequelize,
@@ -66,11 +52,7 @@ module.exports = (sequelize, DataTypes, Model) => {
         modelName: "property_listings",
       }
     );
-  
-    PropertyListing.belongsTo(sequelize.models.images, {
-        foreignKey: "image_id",
-        as: "images",
-      });
+
       PropertyListing.belongsTo(sequelize.models.users, {
         foreignKey: "user_id",
         as: "users",

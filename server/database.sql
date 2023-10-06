@@ -11,6 +11,7 @@ CREATE TABLE images (
   image_url VARCHAR(255) NOT NULL,
   mimetype VARCHAR(255) NOT NULL,
   originalname VARCHAR(255) NOT NULL,
+  property_id INTEGER REFERENCES property_listings(property_id)
   size VARCHAR(255) NOT NULL
 );
 
@@ -26,7 +27,5 @@ CREATE TABLE property_listings (
     bedrooms INT NOT NULL,
     bathrooms INT NOT NULL,
     living_rooms INT NOT NULL,
-    rating INT CHECK (rating >= 1 AND rating <= 5),
     property_type property_type NOT NULL,
-    image_id INT REFERENCES images(image_id) NOT NULL
 );

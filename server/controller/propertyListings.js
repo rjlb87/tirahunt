@@ -8,7 +8,7 @@ class PropertyListing {
 
   async getAllProperty() {
     try {
-      const user = await this.db.property.findAll(
+      const property = await this.db.property.findAll(
         {
         order: [["property_id", "ASC"]],
         include: [
@@ -17,30 +17,40 @@ class PropertyListing {
             as: 'users',
             attributes: ['username']
           },
-          {
-            model: this.db.images,
-            as: 'images',
-            attributes: ['image_url']
-          },
         ],
         }
       );
-      return user;
+      return property;
     } catch (error) {
       console.log("Error", error);
     }
   }
 
   async createProperty(property) {
-
+    console.log('eto yun', property);
     try {
-        const newProperty = await this.db.property.create(property);
-        return newProperty;
-      } catch (error) {
-        throw error;
-      }
+      // Convert the price to thousands before creating the property
+      const priceInThousands = parseFloat(property.price) * 1000;
+  
+      const createProperty = await this.db.property.create({
+        user_id: property.user_id,
+        description: property.description,
+        location: property.location,
+        price: priceInThousands, // Store the price in thousands
+        bedrooms: property.bedrooms,
+        bathrooms: property.bathrooms,
+        living_rooms: property.living_rooms,
+        property_type: property.property_type,
+      });
+  
+      return createProperty;
+    } catch (error) {
+      throw error;
     }
-
+  }
+  
+  
+  
   async updateProperty(property) {
     let data = {}
     try {
