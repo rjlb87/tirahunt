@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { createUsers } from "../../services/UsersService";
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -11,8 +12,8 @@ const Signup = () => {
     email: "",
     password: "",
   });
-  const navigate = useNavigate()
-
+  const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,6 +21,9 @@ const Signup = () => {
       ...formdata,
       [name]: value,
     }));
+  };
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   const handleSubmit = async (e) => {
@@ -29,7 +33,7 @@ const Signup = () => {
       setFormData({ username: "", email: "", password: "" });
 
       toast.success("Signup successful!", "success");
-      navigate('/signin')
+      navigate("/signin");
     } catch (error) {
       toast.error("Signup failed. Please try again.", "error");
       console.error(error.message);
@@ -44,12 +48,9 @@ const Signup = () => {
       >
         <button
           className="absolute top-2 right-4 h-10 w-6 text-gray-800"
-          onClick={() => {
-            // Handle close button click here
-          }}
-        >
-          <AiOutlineClose />
-        </button>
+          // onClick={togglePasswordVisibility}
+          // Handle close button click here
+        ></button>
         <p className="text-md font-bold text-center mt-4 pb-2">Sign up</p>
         <hr className="w-full border-t border-gray-300 mb-6" />
         <div className="w-full flex flex-col items-start px-6 text-xl font-semibold">
