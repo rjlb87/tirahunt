@@ -55,18 +55,21 @@ function Home() {
             <div className="p-4">
               {image.property_listings?.users?.username && (
                 <p className="text-gray-500 text-sm">
-                  Name: {image.property_listings.users.username}
+                  Hosted by: {image.property_listings.users.username}
                 </p>
               )}
               <p className="text-gray-500 text-sm">
                 Location: {image.property_listings?.location}
               </p>
-              <p className="text-gray-500 text-sm">
-                Price:{" "}
-                {image.property_listings?.price
-                  ? `₱${Number(image.property_listings.price).toLocaleString()}`
-                  : ""}
-              </p>
+              {image.property_listings?.price !== undefined ? (
+  <p className="text-gray-500 text-sm">
+    Price: {Number(image.property_listings.price).toLocaleString()}
+  </p>
+) : (
+  <p className="text-gray-500 text-sm">Price: N/A</p>
+)}
+
+
               <p className="text-gray-500 text-sm">
                 Description: {image.property_listings?.description}
               </p>

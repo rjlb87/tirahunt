@@ -225,6 +225,7 @@ const PropertyForm = () => {
                   ></textarea>
                 </div>
               <div className="text-center">
+                {/* wag nyp to galawin */}
                 <button
                   type="submit"
                   className="w-full px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-200"
@@ -248,6 +249,7 @@ const PropertyForm = () => {
                   Submit
                 </button>
               </div>
+               {/* wag nyp to galawin */}
             </form>
           </div>
         </div>
