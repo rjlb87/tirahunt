@@ -31,7 +31,7 @@ function Home() {
     <div className="bg-gray-100 min-h-screen">
       <header className="bg-white p-4">
         <div className="max-w-6xl mx-auto flex justify-between items-center">
-          <h1 className="text-3xl font-semibold">Property List</h1>
+          <h1 className="text-3xl font-semibold"></h1>
           <button
             className="bg-[#FF385C] text-white rounded-lg py-2 px-6"
             onClick={handleAddClick}
@@ -62,13 +62,13 @@ function Home() {
                 Location: {image.property_listings?.location}
               </p>
               {image.property_listings?.price !== undefined ? (
-  <p className="text-gray-500 text-sm">
-    Price: {Number(image.property_listings.price).toLocaleString()}
-  </p>
-) : (
-  <p className="text-gray-500 text-sm">Price: N/A</p>
-)}
-
+                <p className="text-gray-500 text-sm">
+                  Price:{" "}
+                  {Number(image.property_listings.price).toLocaleString()}
+                </p>
+              ) : (
+                <p className="text-gray-500 text-sm">Price: N/A</p>
+              )}
 
               <p className="text-gray-500 text-sm">
                 Description: {image.property_listings?.description}

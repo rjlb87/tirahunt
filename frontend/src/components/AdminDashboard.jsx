@@ -15,11 +15,11 @@ function AdminDashboard() {
   const [searchTerm, setSearchTerm] = useState("");
   const itemsPerPage = 10;
   const pageCount = Math.ceil(users.length / itemsPerPage);
-  const [showEl, setShowEl] = useState(false)
+  const [showEl, setShowEl] = useState(false);
 
   const showElepsis = () => {
-    setShowEl(!showEl)
-  }
+    setShowEl(!showEl);
+  };
 
   const handlePageClick = ({ selected }) => {
     setCurrentPage(selected);
@@ -131,7 +131,7 @@ function AdminDashboard() {
               </th>
             </tr>
           </thead>
-          <tbody>       
+          <tbody>
             {currentData.map((user, index) => (
               <tr
                 key={user.id}
@@ -148,7 +148,7 @@ function AdminDashboard() {
                 </td>
                 <td className="flex justify-center items-center bg-[#e5fdd8] px-4 space-x-4 pt-4 pb-4">
                   <Edit users={user} />
-              
+
                   <button
                     className="group flex justify-center p-2 px-4 bg-white hover:bg-red-500 text-gray-800 font-bold rounded"
                     onClick={() => handleDeleteUsers(user.id)}

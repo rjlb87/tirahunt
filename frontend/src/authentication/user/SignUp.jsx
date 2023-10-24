@@ -22,6 +22,7 @@ const Signup = () => {
       [name]: value,
     }));
   };
+
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -48,8 +49,7 @@ const Signup = () => {
       >
         <button
           className="absolute top-2 right-4 h-10 w-6 text-gray-800"
-          // onClick={togglePasswordVisibility}
-          // Handle close button click here
+          onClick={togglePasswordVisibility}
         ></button>
         <p className="text-md font-bold text-center mt-4 pb-2">Sign up</p>
         <hr className="w-full border-t border-gray-300 mb-6" />
@@ -65,7 +65,7 @@ const Signup = () => {
           <input
             className="text-sm border rounded-tr-lg rounded-tl-lg border-gray-300 w-full py-4 px-3 text-gray-700 "
             id="username"
-            type="username"
+            type="text"
             name="username"
             value={formData.username}
             onChange={handleChange}
@@ -77,7 +77,7 @@ const Signup = () => {
             htmlFor="email"
           ></label>
           <input
-            className="text-sm border-l border-r border-b   border-gray-300 w-full py-4 px-3 text-gray-700 "
+            className="text-sm border-l border-r border-b border-gray-300 w-full py-4 px-3 text-gray-700 "
             id="email"
             type="email"
             name="email"
@@ -92,16 +92,24 @@ const Signup = () => {
             className="block text-gray-700 text-sm font-bold"
             htmlFor="password"
           ></label>
-          <input
-            className="font-semibold text-sm rounded-br-lg rounded-bl-lg border-b border-l border-r border-gray-300 w-full py-4 px-3 text-gray-700 "
-            id="password"
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            placeholder="Password"
-            required
-          />
+          <div className="relative w-full">
+            <input
+              className="font-semibold text-sm rounded-br-lg rounded-bl-lg border-b border-l border-r border-gray-300 w-full py-4 px-3 text-gray-700 "
+              id="password"
+              type={showPassword ? "text" : "password"}
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Password"
+              required
+            />
+            <button
+              className="absolute top-0 right-0 h-10 w-10 text-gray-800"
+              onClick={togglePasswordVisibility}
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </button>
+          </div>
         </div>
         <div className="flex flex-col w-full px-6">
           <button
