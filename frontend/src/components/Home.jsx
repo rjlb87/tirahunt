@@ -23,7 +23,7 @@ function Home() {
     }
     const intervalId = setInterval(() => {
       fetchData();
-    }, 2000);
+    }, 11000);
     return () => {
       clearInterval(intervalId);
     };

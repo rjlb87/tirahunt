@@ -1,14 +1,18 @@
 import React, { useState } from "react";
-import { Link } from "react-scroll";
+import { Link as RouterLink } from "react-scroll";
 import { FaSearch } from "react-icons/fa";
 import { navlink } from "../utils/navlinks";
-import { useNavigate } from "react-router-dom";
+import { dropdownlist } from "../utils/dropdownList";
+import { Link } from "react-router-dom";
+import { LiaUserSolid } from "../icons/icons"
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const NavBar = () => {
   const [nav, setNav] = useState(false);
   const [alert, setShowAlert] = useState(false);
   const [isDropdownOpen, setisDropdownopen] = useState(false);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [loggedIn, setloggedIn] = useState(false);
 
   const itemsStorage = localStorage.getItem("data");
@@ -21,13 +25,17 @@ const NavBar = () => {
       setloggedIn(true);
     }
   }
-  let initials = userData !== null ? userData.email[0].toUpperCase() : "";
+  let initials = userData !== null ? userData.email[0].toUpperCase() : <LiaUserSolid size={25}/>;
 
   const toggleDropdown = () => {
     setisDropdownopen(!isDropdownOpen);
   };
-  const closeDropdown = () => {
-    setisDropdownopen(false);
+
+  const handleLogout = () => {
+    sessionStorage.removeItem("jwt");
+    localStorage.removeItem("data");
+    setloggedIn(false);
+    toast.success("Logout Successfully!");
   };
 
   const handleShow = () => {
@@ -72,13 +80,18 @@ const NavBar = () => {
 
       <div className="relative flex justify-between items-center w-full h-[92px] px-4 bg-white border nav">
         <div className="flex items-center ml-4 pt-4">
-          <Link to="Home" smooth={true} duration={500} onClick={handleCloseNav}>
+          <RouterLink
+            to="Home"
+            smooth={true}
+            duration={500}
+            onClick={handleCloseNav}
+          >
             <button>
               <h1 className="text-3xl font-bold text-[#92c872] pl-8 pb-4">
                 tirahunt.
               </h1>
             </button>
-          </Link>
+          </RouterLink>
         </div>
         {/* Search bar */}
         <div className="flex-grow flex justify-center">
@@ -95,45 +108,78 @@ const NavBar = () => {
             </div>
           </div>
         </div>
-
         <div className="flex-1 flex items-center justify-end space-x-4 text-gray-800 pr-10">
           <a className="hidden md:inline" href="#">
             Become a host
           </a>
           <div
-            className=" cursor-pointer w-10 h-10 text-white rounded-full bg-black font-light flex justify-center items-center"
+            className=" cursor-pointer w-10 h-10 text-white rounded-full bg-[#92c872] font-light flex justify-center items-center"
             onClick={toggleDropdown}
           >
             {initials}
           </div>
+          {!loggedIn ? (
+            <div className="relative">
+              {/* Dropdown */}
+              {isDropdownOpen && (
+                <div className="absolute right-0 mt-6 w-48 bg-white border rounded-lg shadow-lg pt-2 pb-2 text-sm">
+                  <div className="text-black">
+                    {dropdownlist.map((item) => (
+                      <div key={item.id}>
+                        <Link to={item.path}>
+                          <button className="py-2 px-4 w-full text-start hover:bg-gray-100">
+                            {item.name}
+                          </button>
+                        </Link>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="relative">
+              {isDropdownOpen && (
+                <div className="absolute right-0 mt-6 w-48 bg-white border rounded-lg shadow-lg pt-2 pb-2 text-sm">
+                  <div className="text-black">
+                    {dropdownlist.map((item) => {
+                      if (item.name === "Logout" && loggedIn) {
+                        // Render "Logout" only when logged in
+                        return (
+                          <button
+                            key={item.id}
+                            onClick={handleLogout}
+                            className="py-2 px-4 w-full text-start hover:bg-gray-100"
+                          >
+                            {item.name}
+                          </button>
+                        );
+                      }
 
-          <div className="relative">
-            {/* Dropdown */}
-            {isDropdownOpen && (
-              <div className="absolute right-0 mt-6 w-48 bg-white border rounded-lg shadow-lg pt-2 pb-2 text-sm">
-                <ul className="cursor-pointer">
-                  <li
-                    onClick={() => navigate("/signup")}
-                    className="py-2 px-4 hover:bg-gray-100 cursor-pointer font-semibold"
-                  >
-                    Sign up
-                  </li>
-                  <li className="py-2 px-4 hover:bg-gray-100 cursor-pointer">
-                    Log in
-                  </li>
-                  <li className="py-2 px-4 hover:bg-gray-100 cursor-pointer">
-                    Help Center
-                  </li>
-                </ul>
-              </div>
-            )}
-            {isDropdownOpen && (
-              <div
-                className="fixed inset-0 h-full w-full z-10"
-                onClick={closeDropdown}
-              ></div>
-            )}
-          </div>
+                      if (
+                        (item.name === "Sign up" || item.name === "Sign in") &&
+                        loggedIn
+                      ) {
+                        // Skip rendering "Sign up" and "Sign in" when logged in
+                        return null;
+                      }
+
+                      // Render other items
+                      return (
+                        <div key={item.id}>
+                          <Link to={item.path}>
+                            <button className="py-2 px-4 w-full text-start hover-bg-gray-100">
+                              {item.name}
+                            </button>
+                          </Link>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
 
           {/* Mobile navigation */}
           <div
@@ -149,23 +195,23 @@ const NavBar = () => {
                   key={id}
                   className="px-3 cursor-pointer font-medium text-black"
                 >
-                  <Link
+                  <RouterLink
                     activeClass="active"
                     to={link}
                     spy={true}
                     smooth={true}
                     duration={500}
-                    s
                     onClick={handleCloseNav}
                   >
                     {link}
-                  </Link>
+                  </RouterLink>
                 </li>
               ))}
             </ul>
           )}
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };
