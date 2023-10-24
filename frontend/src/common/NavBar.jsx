@@ -21,10 +21,7 @@ const NavBar = () => {
       setloggedIn(true);
     }
   }
-  let initials =
-    userData !== null
-      ? userData.email[0].toUpperCase()
-      : "";
+  let initials = userData !== null ? userData.email[0].toUpperCase() : "";
 
   const toggleDropdown = () => {
     setisDropdownopen(!isDropdownOpen);
@@ -103,63 +100,17 @@ const NavBar = () => {
           <a className="hidden md:inline" href="#">
             Become a host
           </a>
-          <div className="w-10 h-10 text-white rounded-full bg-black font-light flex justify-center items-center">
-              {initials}
-            </div>
-
-          <svg
-            className="h-6 cursor-pointer"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth="2"
+          <div
+            className=" cursor-pointer w-10 h-10 text-white rounded-full bg-black font-light flex justify-center items-center"
+            onClick={toggleDropdown}
           >
-       
-            <path
-              // data-initials={initials}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
-            />
-          </svg>
-          <div className="relative">
-            {/* Profile icon */}
-            <div
-              className="flex space-x-2 border rounded-full p-2"
-              onClick={toggleDropdown}
-            >
-              <svg
-                className="h-6 cursor-pointer"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth="1"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
-              <svg
-                className="h-6 cursor-pointer"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </div>
+            {initials}
+          </div>
 
+          <div className="relative">
             {/* Dropdown */}
             {isDropdownOpen && (
-              <div className="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg pt-2 pb-2 text-sm">
+              <div className="absolute right-0 mt-6 w-48 bg-white border rounded-lg shadow-lg pt-2 pb-2 text-sm">
                 <ul className="cursor-pointer">
                   <li
                     onClick={() => navigate("/signup")}
@@ -176,7 +127,6 @@ const NavBar = () => {
                 </ul>
               </div>
             )}
-
             {isDropdownOpen && (
               <div
                 className="fixed inset-0 h-full w-full z-10"
