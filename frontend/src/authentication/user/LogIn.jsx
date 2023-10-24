@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { userLogIn } from "../../services/LogInServices";
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -10,7 +11,8 @@ const LoginForm = () => {
     email: "",
     password: "",
   });
-  const navigate = useNavigate()
+  const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -18,6 +20,10 @@ const LoginForm = () => {
       ...formData,
       [name]: value,
     });
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   const handleSubmit = (e) => {
@@ -37,7 +43,7 @@ const LoginForm = () => {
           if (loginSuccess) {
             toast.success("Login successful!", "success");
           }
-          navigate('/')
+          navigate("/");
         } else {
           toast.error("Incorrect password");
         }
@@ -71,7 +77,7 @@ const LoginForm = () => {
             htmlFor="email"
           ></label>
           <input
-            className="text-sm border rounded-tr-lg rounded-tl-lg border-gray-300 w-full py-4 px-3 text-gray-700 "
+            className="text-sm border rounded-tr-lg rounded-tl-lg border-gray-300 w-full py-4 px-3 text-gray-700"
             id="email"
             type="email"
             name="email"
@@ -80,24 +86,30 @@ const LoginForm = () => {
             placeholder="Email"
             required
           />
-        </div>
-        <div className="mb-6 w-full flex flex-col items-center px-6">
           <label
-            className="block text-gray-700 text-sm font-bold"
+            className="text-gray-700 text-sm font-bold"
             htmlFor="password"
           ></label>
-          <input
-            className="font-semibold text-sm rounded-br-lg rounded-bl-lg border-b border-l border-r border-gray-300 w-full py-4 px-3 text-gray-700 "
-            id="password"
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            placeholder="Password"
-            required
-          />
+          <div className="relative w-full">
+            <input
+              className="font-semibold text-sm rounded-br-lg rounded-bl-lg border border-gray-300 w-full py-4 px-3 text-gray-700"
+              id="password"
+              type={showPassword ? "text" : "password"}
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Password"
+              required
+            />
+            <button
+              className="absolute top-0 right-0 h-10 w-10 text-gray-800"
+              onClick={togglePasswordVisibility}
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye size={18} />}
+            </button>
+          </div>
         </div>
-        <div className="flex flex-col w-full px-6">
+        <div className="mb-6 w-full flex flex-col items-center px-6 mt-4">
           <button
             className="bg-[#92c872] hover:bg-[#6b9b53] active:bg-[#4a6d39] transition-opacity duration-200 hover:opacity-80 active:opacity-60 text-white font-semibold py-2 px-4 rounded-xl focus:outline-none focus:shadow-outline w-full"
             type="submit"
@@ -106,7 +118,10 @@ const LoginForm = () => {
           </button>
           <div className="text-gray-700 text-sm mt-8 mb-4 space-x-3 text-center pb-2">
             <p className="inline">Don&apos;t have an account?</p>
-            <p className="inline font-semibold border-b-2 border-gray-800 cursor-pointer">
+            <p
+              className="inline font-semibold border-b-2 border-gray-800 cursor-pointer"
+              onClick={() => navigate("/signup")}
+            >
               Sign up
             </p>
           </div>
