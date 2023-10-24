@@ -102,7 +102,7 @@ const LoginForm = () => {
               required
             />
             <button
-              className="absolute top-0 right-0 h-10 w-10 text-gray-800"
+              className="absolute top-2 right-0 h-10 w-10 text-gray-800"
               onClick={togglePasswordVisibility}
             >
               {showPassword ? <FaEyeSlash /> : <FaEye size={18} />}
