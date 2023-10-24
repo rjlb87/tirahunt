@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import PropertyForm from "./PropertyForm";
 import { fetchImages } from "../services/ImageServices";
+import Category from "./Category";
 
 function Home() {
   const [showForm, setShowForm] = useState(false);
   const [imageData, setImageData] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
   const handleAddClick = () => {
     setShowForm(!showForm);
@@ -21,15 +23,25 @@ function Home() {
     }
     const intervalId = setInterval(() => {
       fetchData();
-    }, 3000);
+    }, 2000);
     return () => {
       clearInterval(intervalId);
     };
   }, []);
 
+  const filteredProperties = selectedCategory
+    ? imageData.filter(
+        (image) => image.property_listings?.property_type === selectedCategory
+      )
+    : imageData;
+
   return (
     <div className="bg-gray-100 min-h-screen">
-      <header className="bg-white p-4">
+      <Category
+        setSelectedCategory={setSelectedCategory}
+        selectedCategory={selectedCategory}
+      />
+      <header className="bg-gray-100 p-4">
         <div className="max-w-6xl mx-auto flex justify-between items-center">
           <h1 className="text-3xl font-semibold"></h1>
           <button
@@ -40,9 +52,8 @@ function Home() {
           </button>
         </div>
       </header>
-
       <div className="max-w-6xl mx-auto mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
-        {imageData.map((image) => (
+        {filteredProperties.map((image) => (
           <div
             key={image.image_id}
             className="bg-white rounded-lg shadow-lg overflow-hidden"

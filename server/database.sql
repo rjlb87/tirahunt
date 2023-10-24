@@ -20,7 +20,7 @@ CREATE TYPE property_type AS ENUM ('House', 'Apartment', 'Bed Space');
 
 CREATE TABLE property_listings (
     property_id SERIAL PRIMARY KEY,
-    user_id INT REFERENCES users(id),
+    user_id INT REFERENCES users(id) NOT NULL,
     description TEXT NOT NULL,
     location TEXT NOT NULL,
     price DECIMAL(10, 2) NOT NULL,
@@ -28,4 +28,5 @@ CREATE TABLE property_listings (
     bathrooms INT NOT NULL,
     living_rooms INT NOT NULL,
     property_type property_type NOT NULL,
+    image_id INT REFERENCES images(image_id) NOT NULL
 );
