@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { createUsers } from "../../services/UsersService";
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -11,8 +12,8 @@ const Signup = () => {
     email: "",
     password: "",
   });
-  const navigate = useNavigate()
-
+  const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,6 +23,10 @@ const Signup = () => {
     }));
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -29,7 +34,7 @@ const Signup = () => {
       setFormData({ username: "", email: "", password: "" });
 
       toast.success("Signup successful!", "success");
-      navigate('/signin')
+      navigate("/signin");
     } catch (error) {
       toast.error("Signup failed. Please try again.", "error");
       console.error(error.message);
@@ -44,12 +49,8 @@ const Signup = () => {
       >
         <button
           className="absolute top-2 right-4 h-10 w-6 text-gray-800"
-          onClick={() => {
-            // Handle close button click here
-          }}
-        >
-          <AiOutlineClose />
-        </button>
+          onClick={togglePasswordVisibility}
+        ></button>
         <p className="text-md font-bold text-center mt-4 pb-2">Sign up</p>
         <hr className="w-full border-t border-gray-300 mb-6" />
         <div className="w-full flex flex-col items-start px-6 text-xl font-semibold">
@@ -64,7 +65,7 @@ const Signup = () => {
           <input
             className="text-sm border rounded-tr-lg rounded-tl-lg border-gray-300 w-full py-4 px-3 text-gray-700 "
             id="username"
-            type="username"
+            type="text"
             name="username"
             value={formData.username}
             onChange={handleChange}
@@ -76,7 +77,7 @@ const Signup = () => {
             htmlFor="email"
           ></label>
           <input
-            className="text-sm border-l border-r border-b   border-gray-300 w-full py-4 px-3 text-gray-700 "
+            className="text-sm border-l border-r border-b border-gray-300 w-full py-4 px-3 text-gray-700 "
             id="email"
             type="email"
             name="email"
@@ -91,16 +92,24 @@ const Signup = () => {
             className="block text-gray-700 text-sm font-bold"
             htmlFor="password"
           ></label>
-          <input
-            className="font-semibold text-sm rounded-br-lg rounded-bl-lg border-b border-l border-r border-gray-300 w-full py-4 px-3 text-gray-700 "
-            id="password"
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            placeholder="Password"
-            required
-          />
+          <div className="relative w-full">
+            <input
+              className="font-semibold text-sm rounded-br-lg rounded-bl-lg border-b border-l border-r border-gray-300 w-full py-4 px-3 text-gray-700 "
+              id="password"
+              type={showPassword ? "text" : "password"}
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Password"
+              required
+            />
+            <button
+              className="absolute top-0 right-0 h-10 w-10 text-gray-800"
+              onClick={togglePasswordVisibility}
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </button>
+          </div>
         </div>
         <div className="flex flex-col w-full px-6">
           <button

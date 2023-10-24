@@ -30,17 +30,20 @@ function Home() {
   }, []);
 
   const filteredProperties = selectedCategory
-    ? imageData.filter((image) => image.property_listings?.property_type === selectedCategory)
+    ? imageData.filter(
+        (image) => image.property_listings?.property_type === selectedCategory
+      )
     : imageData;
 
   return (
     <div className="bg-gray-100 min-h-screen">
-     
-
-      <Category setSelectedCategory={setSelectedCategory} selectedCategory={selectedCategory} />
+      <Category
+        setSelectedCategory={setSelectedCategory}
+        selectedCategory={selectedCategory}
+      />
       <header className="bg-gray-100 p-4">
         <div className="max-w-6xl mx-auto flex justify-between items-center">
-          <h1 className="text-3xl font-semibold">Property List</h1>
+          <h1 className="text-3xl font-semibold"></h1>
           <button
             className="bg-[#FF385C] text-white rounded-lg py-2 px-6"
             onClick={handleAddClick}
@@ -71,7 +74,8 @@ function Home() {
               </p>
               {image.property_listings?.price !== undefined ? (
                 <p className="text-gray-500 text-sm">
-                  Price: {Number(image.property_listings.price).toLocaleString()}
+                  Price:{" "}
+                  {Number(image.property_listings.price).toLocaleString()}
                 </p>
               ) : (
                 <p className="text-gray-500 text-sm">Price: N/A</p>
