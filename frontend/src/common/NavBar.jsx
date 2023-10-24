@@ -1,14 +1,15 @@
 import React, { useState } from "react";
-import { Link } from "react-scroll";
+import { Link as RouterLink } from "react-scroll";
 import { FaSearch } from "react-icons/fa";
 import { navlink } from "../utils/navlinks";
-import { useNavigate } from "react-router-dom";
+import { dropdownlist } from "../utils/dropdownList";
+import { Link } from "react-router-dom";
 
 const NavBar = () => {
   const [nav, setNav] = useState(false);
   const [alert, setShowAlert] = useState(false);
   const [isDropdownOpen, setisDropdownopen] = useState(false);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [loggedIn, setloggedIn] = useState(false);
 
   const itemsStorage = localStorage.getItem("data");
@@ -25,9 +26,6 @@ const NavBar = () => {
 
   const toggleDropdown = () => {
     setisDropdownopen(!isDropdownOpen);
-  };
-  const closeDropdown = () => {
-    setisDropdownopen(false);
   };
 
   const handleShow = () => {
@@ -72,13 +70,18 @@ const NavBar = () => {
 
       <div className="relative flex justify-between items-center w-full h-[92px] px-4 bg-white border nav">
         <div className="flex items-center ml-4 pt-4">
-          <Link to="Home" smooth={true} duration={500} onClick={handleCloseNav}>
+          <RouterLink
+            to="Home"
+            smooth={true}
+            duration={500}
+            onClick={handleCloseNav}
+          >
             <button>
               <h1 className="text-3xl font-bold text-[#92c872] pl-8 pb-4">
                 tirahunt.
               </h1>
             </button>
-          </Link>
+          </RouterLink>
         </div>
         {/* Search bar */}
         <div className="flex-grow flex justify-center">
@@ -95,7 +98,6 @@ const NavBar = () => {
             </div>
           </div>
         </div>
-
         <div className="flex-1 flex items-center justify-end space-x-4 text-gray-800 pr-10">
           <a className="hidden md:inline" href="#">
             Become a host
@@ -106,34 +108,49 @@ const NavBar = () => {
           >
             {initials}
           </div>
-
-          <div className="relative">
-            {/* Dropdown */}
-            {isDropdownOpen && (
-              <div className="absolute right-0 mt-6 w-48 bg-white border rounded-lg shadow-lg pt-2 pb-2 text-sm">
-                <ul className="cursor-pointer">
-                  <li
-                    onClick={() => navigate("/signup")}
-                    className="py-2 px-4 hover:bg-gray-100 cursor-pointer font-semibold"
-                  >
-                    Sign up
-                  </li>
-                  <li className="py-2 px-4 hover:bg-gray-100 cursor-pointer">
-                    Log in
-                  </li>
-                  <li className="py-2 px-4 hover:bg-gray-100 cursor-pointer">
-                    Help Center
-                  </li>
-                </ul>
-              </div>
-            )}
-            {isDropdownOpen && (
-              <div
-                className="fixed inset-0 h-full w-full z-10"
-                onClick={closeDropdown}
-              ></div>
-            )}
-          </div>
+          {!loggedIn ? (
+            <div className="relative">
+              {/* Dropdown */}
+              {isDropdownOpen && (
+                <div className="absolute right-0 mt-6 w-48 bg-white border rounded-lg shadow-lg pt-2 pb-2 text-sm">
+                  <div className="text-black">
+                    {dropdownlist.map((item) => (
+                      <div key={item.id}>
+                        <Link to={item.path}>
+                          <button className="py-2 px-4 w-full text-start hover:bg-gray-100">
+                            {item.name}
+                          </button>
+                        </Link>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="relative">
+              {isDropdownOpen && (
+                <div className="absolute right-0 mt-6 w-48 bg-white border rounded-lg shadow-lg pt-2 pb-2 text-sm">
+                  <div className="text-black">
+                    {dropdownlist.map((item) => (
+                      <div key={item.id}>
+                        {item.name === "Logout" &&
+                        !loggedIn ? null : item.name === "Sign up" && // Don't render "Logout" and "Profile" if not logged in
+                          loggedIn ? null : item.name === "Sign in" && // Don't render "Sign up" if logged in
+                          loggedIn ? null : ( // Don't render "Sign in" if logged in
+                          <Link to={item.path}>
+                            <button className="py-2 px-4 w-full text-start hover:bg-gray-100">
+                              {item.name}
+                            </button>
+                          </Link>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
 
           {/* Mobile navigation */}
           <div
@@ -149,17 +166,16 @@ const NavBar = () => {
                   key={id}
                   className="px-3 cursor-pointer font-medium text-black"
                 >
-                  <Link
+                  <RouterLink
                     activeClass="active"
                     to={link}
                     spy={true}
                     smooth={true}
                     duration={500}
-                    s
                     onClick={handleCloseNav}
                   >
                     {link}
-                  </Link>
+                  </RouterLink>
                 </li>
               ))}
             </ul>
