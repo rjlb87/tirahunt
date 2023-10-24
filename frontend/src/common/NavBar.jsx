@@ -4,6 +4,9 @@ import { FaSearch } from "react-icons/fa";
 import { navlink } from "../utils/navlinks";
 import { dropdownlist } from "../utils/dropdownList";
 import { Link } from "react-router-dom";
+import { LiaUserSolid } from "../icons/icons"
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const NavBar = () => {
   const [nav, setNav] = useState(false);
@@ -22,10 +25,17 @@ const NavBar = () => {
       setloggedIn(true);
     }
   }
-  let initials = userData !== null ? userData.email[0].toUpperCase() : "";
+  let initials = userData !== null ? userData.email[0].toUpperCase() : <LiaUserSolid size={25}/>;
 
   const toggleDropdown = () => {
     setisDropdownopen(!isDropdownOpen);
+  };
+
+  const handleLogout = () => {
+    sessionStorage.removeItem("jwt");
+    localStorage.removeItem("data");
+    setloggedIn(false);
+    toast.success("Logout Successfully!");
   };
 
   const handleShow = () => {
@@ -103,7 +113,7 @@ const NavBar = () => {
             Become a host
           </a>
           <div
-            className=" cursor-pointer w-10 h-10 text-white rounded-full bg-black font-light flex justify-center items-center"
+            className=" cursor-pointer w-10 h-10 text-white rounded-full bg-[#92c872] font-light flex justify-center items-center"
             onClick={toggleDropdown}
           >
             {initials}
@@ -132,20 +142,39 @@ const NavBar = () => {
               {isDropdownOpen && (
                 <div className="absolute right-0 mt-6 w-48 bg-white border rounded-lg shadow-lg pt-2 pb-2 text-sm">
                   <div className="text-black">
-                    {dropdownlist.map((item) => (
-                      <div key={item.id}>
-                        {item.name === "Logout" &&
-                        !loggedIn ? null : item.name === "Sign up" && // Don't render "Logout" and "Profile" if not logged in
-                          loggedIn ? null : item.name === "Sign in" && // Don't render "Sign up" if logged in
-                          loggedIn ? null : ( // Don't render "Sign in" if logged in
+                    {dropdownlist.map((item) => {
+                      if (item.name === "Logout" && loggedIn) {
+                        // Render "Logout" only when logged in
+                        return (
+                          <button
+                            key={item.id}
+                            onClick={handleLogout}
+                            className="py-2 px-4 w-full text-start hover:bg-gray-100"
+                          >
+                            {item.name}
+                          </button>
+                        );
+                      }
+
+                      if (
+                        (item.name === "Sign up" || item.name === "Sign in") &&
+                        loggedIn
+                      ) {
+                        // Skip rendering "Sign up" and "Sign in" when logged in
+                        return null;
+                      }
+
+                      // Render other items
+                      return (
+                        <div key={item.id}>
                           <Link to={item.path}>
-                            <button className="py-2 px-4 w-full text-start hover:bg-gray-100">
+                            <button className="py-2 px-4 w-full text-start hover-bg-gray-100">
                               {item.name}
                             </button>
                           </Link>
-                        )}
-                      </div>
-                    ))}
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               )}
@@ -182,6 +211,7 @@ const NavBar = () => {
           )}
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

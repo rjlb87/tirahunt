@@ -7,8 +7,10 @@ import { FaLocationDot, FaShower } from "react-icons/fa6";
 import { ImPriceTag } from "react-icons/im";
 import { MdLiving, MdDashboard } from "react-icons/md";
 import { BsFillHouseDoorFill, BsFillPersonFill } from "react-icons/bs";
+import { LiaUserSolid } from "react-icons/lia"
 
 export {
+  LiaUserSolid,
   BsFillPersonFill,
   BsFillHouseDoorFill,
   MdLiving,
