@@ -4,6 +4,7 @@ import LogIn from "./authentication/user/LogIn";
 import SignUp from "./authentication/user/SignUp";
 import AdminDashboard from "./components/AdminDashboard";
 import PropertyForm from "./components/PropertyForm";
+import UserProfile from "./components/UserProfile";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/dashboard" element={<AdminDashboard />} />
         <Route path="/propertyform" element={<PropertyForm />} />
+        <Route path="/userProfile" element={<UserProfile />} />
       </Routes>
     </BrowserRouter>
   );

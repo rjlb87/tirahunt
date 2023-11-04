@@ -36,9 +36,9 @@ export const uploadFiles = async (files, propertyId) => { // Add 'propertyId' pa
 };
 
 
-export const fetchImagesByUser = async (image_id) => {
+export const fetchImagesByUser = async (user_id) => {
   try {
-    const response = await fetch(`/api/v1/images/${image_id}`); // Include the full URL
+    const response = await fetch(`/api/v1/images/${user_id}`); // Include the full URL
     const data = await response.json();
     console.log("Fetched Images:", data);
     return data;
