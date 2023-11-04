@@ -45,12 +45,12 @@ app.get("/api/v1/images", (req, res) => {
     .then((data) => res.status(200).json(data))
     .catch((error) => res.status(500).json({ error: "Internal Server Error" }));
 });
-// app.get("/api/v1/images/:image_id", (req, res) => {
-//   imagesController
-//     .getImagesByUser(req.params.image_id)
-//     .then((data) => res.status(200).json(data))
-//     .catch((error) => res.status(500).json({ error: "Internal Server Error" }));
-// });
+app.get("/api/v1/images/:user_id", (req, res) => {
+  imagesController
+    .getImagesByUser(req.params.user_id)
+    .then((data) => res.status(200).json(data))
+    .catch((error) => res.status(500).json({ error: "Internal Server Error" }));
+});
 
 
 // Serve the images from the specified directory

@@ -39,19 +39,41 @@ class ImagesRepository {
     }
   }
 
+  async getImagesByUser(user_id) {
+    try {
+      const images = await this.db.images.findAll({
+        include: [
+          {
+            model: this.db.property,
+            as: "property_listings",
+            attributes: [
+              "description",
+              "location",
+              "price",
+              "bedrooms",
+              "bathrooms",
+              "living_rooms",
+              "property_type",
+            ],
+            where: {
+              user_id: user_id,
+            },
+            include: [
+              {
+                model: this.db.users,
+                as: "users",
+                attributes: ["id", "username"],
+              },
+            ],
+          },
+        ],
+      });
 
-  // async getImagesByUser(image_id) {
-  //   try {
-  //     const images = await this.db.images.findAll({
-  //       where : {
-  //         image_id : image_id
-  //       }
-  //     })
-  //     return images
-  //   } catch (error) {
-  //     console.error("Error", error);
-  //   }
-  // }
+      return images;
+    } catch (error) {
+      console.log("Error", error);
+    }
+  }
 
   async upload(body, files) {
     try {
@@ -59,7 +81,7 @@ class ImagesRepository {
         // Handle the case where files is undefined or not an array
         throw new Error("Invalid files parameter");
       }
-  
+
       const insertPromises = files.map(async (file, index) => {
         const { filename, mimetype, originalname, size } = file;
         const fileData = {
@@ -69,14 +91,14 @@ class ImagesRepository {
           size,
           property_id: body.property_id,
         };
-  
+
         const imageUploaded = await this.db.images.create(fileData);
         console.log(`Done ${index + 1}`);
         return imageUploaded;
       });
-  
+
       const insertedImages = await Promise.all(insertPromises);
-  
+
       return "Successfully inserted";
     } catch (error) {
       console.error(error.message);
@@ -86,33 +108,30 @@ class ImagesRepository {
   }
 
   async updateImages(image_id) {
-    let data = {}
+    let data = {};
     try {
       data = await this.db.images.update(
-        {...image_id},
+        { ...image_id },
         {
           where: {
-            image_id : image_id.image_id
-          }
+            image_id: image_id.image_id,
+          },
         }
-      )
-       return data
+      );
+      return data;
     } catch (error) {
-      console.log('Error', error)
+      console.log("Error", error);
     }
   }
   async deleteImages(image_id) {
     try {
-      const deleteImage = await this.db.images.destroy(
-        {
-          where: { image_id }
-        }
-      )
+      const deleteImage = await this.db.images.destroy({
+        where: { image_id },
+      });
     } catch (error) {
-      console.log('Error', error)
+      console.log("Error", error);
     }
   }
-  
 }
 
 module.exports = new ImagesRepository();
