@@ -4,7 +4,7 @@ import { FaSearch } from "react-icons/fa";
 import { navlink } from "../utils/navlinks";
 import { dropdownlist } from "../utils/dropdownList";
 import { Link } from "react-router-dom";
-import { LiaUserSolid } from "../icons/icons"
+import { LiaUserSolid } from "../icons/icons";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -25,7 +25,12 @@ const NavBar = () => {
       setloggedIn(true);
     }
   }
-  let initials = userData !== null ? userData.email[0].toUpperCase() : <LiaUserSolid size={25}/>;
+  let initials =
+    userData !== null ? (
+      userData.email[0].toUpperCase()
+    ) : (
+      <LiaUserSolid size={25} />
+    );
 
   const toggleDropdown = () => {
     setisDropdownopen(!isDropdownOpen);
