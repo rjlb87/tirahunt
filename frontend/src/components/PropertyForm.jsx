@@ -30,10 +30,10 @@ const PropertyForm = () => {
     const numberValue = parseFloat(value.replace(/,/g, ""));
     return numberValue.toLocaleString();
   };
-  
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-  
+
     // Format the price with commas
     if (name === "price") {
       const formattedPrice = formatPriceWithCommas(value);
@@ -42,7 +42,6 @@ const PropertyForm = () => {
       setProperty({ ...property, [name]: value });
     }
   };
-  
 
   const handleImageUpload = (selectedFiles) => {
     console.log("Selected Files:", selectedFiles);
@@ -53,7 +52,7 @@ const PropertyForm = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     try {
       const response = await createProperty(property);
@@ -74,7 +73,6 @@ const PropertyForm = () => {
         images: [],
       });
       toast.success("Property Added");
-
     } catch (error) {
       toast.error("Invalid Inputs");
       console.error("Error creating property:", error);
@@ -84,19 +82,16 @@ const PropertyForm = () => {
   return (
     <div className="max-w-6xl mx-auto bg-black rounded-lg shadow-lg">
       {!showForm && (
-        <div className="fixed inset-0 z-50 flex flex-col justify-center items-center overflow-auto bg-opacity-75">
-          <div className="bg-gray-500 px-6 max-w-lg py-4 rounded-lg">
+        <div className="fixed inset-0 z-50 flex flex-col justify-center items-center overflow-auto bg-opacity-75 pt-20">
+          <div className="bg-white px-6 max-w-lg py-4 rounded-lg">
             <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-semibold mb-4">
-                Add a New Property
-              </h2>
+              <h2 className="text-2xl font-semibold mb-4">New Property</h2>
               <button onClick={handleShow}>
                 <AiOutlineClose />
               </button>
             </div>
             <form onSubmit={handleSubmit}>
               <div className="grid grid-cols-2 gap-4 ">
-                
                 <div className="mb-4">
                   <label
                     htmlFor="location"
@@ -184,7 +179,7 @@ const PropertyForm = () => {
                     className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:ring focus:ring-blue-200 focus:outline-none"
                   />
                 </div>
-                
+
                 <div className="mb-4">
                   <label
                     htmlFor="property_type"
@@ -208,27 +203,27 @@ const PropertyForm = () => {
                 </div>
               </div>
               <div className="mb-4">
-                  <label
-                    htmlFor="description"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Description:
-                  </label>
-                  <textarea
-                    type="text"
-                    name="description"
-                    id="description"
-                    value={property.description}
-                    onChange={handleInputChange}
-                    required
-                    className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:ring focus:ring-blue-200 focus:outline-none"
-                  ></textarea>
-                </div>
+                <label
+                  htmlFor="description"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Description:
+                </label>
+                <textarea
+                  type="text"
+                  name="description"
+                  id="description"
+                  value={property.description}
+                  onChange={handleInputChange}
+                  required
+                  className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:ring focus:ring-blue-200 focus:outline-none"
+                ></textarea>
+              </div>
               <div className="text-center">
                 {/* wag nyp to galawin */}
                 <button
                   type="submit"
-                  className="w-full px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-200"
+                  className="w-full px-4 py-2 bg-[#92c872] text-white rounded  focus:outline-none focus:ring focus:ring-blue-200"
                 >
                   Add Property
                 </button>
@@ -242,14 +237,14 @@ const PropertyForm = () => {
               </div>
               <div className="text-center">
                 <button
-                  type="button" 
-                  className="w-full px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-200"
-                  onClick={handleShow} 
+                  type="button"
+                  className="w-full px-4 py-2 bg-[#92c872] text-white rounded  focus:outline-none focus:ring focus:ring-blue-200 mt-2"
+                  onClick={handleShow}
                 >
                   Submit
                 </button>
               </div>
-               {/* wag nyp to galawin */}
+              {/* wag nyp to galawin */}
             </form>
           </div>
         </div>

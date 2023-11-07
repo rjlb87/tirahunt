@@ -19,7 +19,7 @@ const ImageUpload = ({ handleImageUpload, property }) => {
     try {
       const uploadedImages = await uploadFiles(files, property.property_id);
       console.log("Uploaded files: ", uploadedImages);
-  
+
       if (Array.isArray(uploadedImages) && uploadedImages.length > 0) {
         const imageIds = uploadedImages.map((image) => image.image_id);
         console.log("Image IDs:", imageIds);
@@ -32,12 +32,10 @@ const ImageUpload = ({ handleImageUpload, property }) => {
       console.error("Error uploading files", error);
     }
   };
-  
-  
-  
+
   return (
     <div className="max-w-6xl mx-auto">
-      <div className="bg-slate-400 flex justify-center items-center">
+      <div className="bg-[#92c872] flex justify-center items-center">
         <div>
           <div className="flex items-center text-black gap-2">
             <input
@@ -47,11 +45,11 @@ const ImageUpload = ({ handleImageUpload, property }) => {
               onChange={handleFileChange}
               multiple
             />
-            <div className="flex justify-center">
+            <div className="flex justify-center px-2 py-2">
               <button
                 type="button"
                 onClick={handleUpload}
-                className="px-4 py-2 font-medium text-white bg-green-800 rounded hover:bg-green-900 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                className="border px-2 font-medium text-gray-600 bg-[#92c872] rounded"
               >
                 Upload
               </button>
